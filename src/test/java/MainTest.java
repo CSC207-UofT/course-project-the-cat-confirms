@@ -1,30 +1,21 @@
 import Entities.User;
 import Repo.UserRepo;
-import org.junit.After;
-import org.junit.Before;
 
-import java.io.IOException;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 public class MainTest {
-    @Before
-    public void setUp() {
-
-    }
-
-    @After
-    public void tearDown() {
-    }
-
-    public void testProfileRead() {
+    @Test
+    public void TestProfileRead() {
+        SystemInOut systemInOut = new SystemInOut();
         UserRepo userRepo = new UserRepo();
         User owner = null;
         if (!userRepo.isLoaded()) {
-            String ownerName = systemInOut.getLine("Initializing... Please enter your username:");
-            owner = new User(ownerName);
+            owner = new User("Junhao");
             userRepo.initRepo(owner);
         } else {
             owner = userRepo.getUser();
         }
-        System.out.println(owner.toString());
+        Assertions.assertEquals(owner.getNickname(),"Junhao");
     }
 }

@@ -10,8 +10,8 @@ import java.util.UUID;
 public class Chatroom implements JSONable {
     private final String roomId;
     private final ArrayList<Message> messages;
-    private String roomName;
     private final User admin;
+    private String roomName;
 
     public Chatroom(String roomName, User admin) {
         this.roomId = UUID.randomUUID().toString();
