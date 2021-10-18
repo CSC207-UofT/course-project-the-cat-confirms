@@ -16,6 +16,6 @@ public class MainTest {
         } else {
             owner = userRepo.getUser();
         }
-        Assertions.assertEquals(owner.getNickname(),"Junhao");
+        Assertions.assertEquals("Junhao", owner.getNickname());
     }
 }
