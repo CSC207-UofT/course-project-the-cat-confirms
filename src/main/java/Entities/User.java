@@ -45,4 +45,12 @@ public class User implements JSONable {
         dict.put("nickname", nickname);
         return dict;
     }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "userId='" + userId + '\'' +
+                ", nickname='" + nickname + '\'' +
+                '}';
+    }
 }
