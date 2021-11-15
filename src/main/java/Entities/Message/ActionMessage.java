@@ -29,7 +29,7 @@ public class ActionMessage extends Message<String> {
         return "ActionMessage{" +
                 "sender='" + this.sender.getNickname() + '\'' +
                 "action='" + this.action + '\'' +
-                " the original message='" + this.original + '\'' +
+                "the original message='" + this.original + '\'' +
                 '}';
     }
 }

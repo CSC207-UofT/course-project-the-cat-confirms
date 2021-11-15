@@ -12,6 +12,6 @@ public class ActionMessageTest {
         TextMessage tmsg = new TextMessage("Ice cream is awesome, like if you agree!", owner);
         ActionMessage amsg = new ActionMessage("Like", owner, tmsg);
         String result = amsg.toString();
-        Assertions.assertEquals("ActionMessage{sender='Varun'action='Like' the original message='TextMessage{sender='Varun'msg='Ice cream is awesome, like if you agree!'}'}", result);
+        Assertions.assertEquals("ActionMessage{sender='Varun'action='Like'the original message='TextMessage{sender='Varun'msg='Ice cream is awesome, like if you agree!'}'}", result);
     }
 }
