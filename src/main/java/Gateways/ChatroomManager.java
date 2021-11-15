@@ -1,17 +1,11 @@
 package Gateways;
 
 import Entities.Message.Message;
-import Entities.Message.TextMessage;
 import Entities.User;
 import UseCases.Chatroom;
 import Utils.MyHttpClient;
 import org.json.simple.JSONValue;
 
-import java.io.OutputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.net.URLConnection;
-import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -27,8 +21,11 @@ public class ChatroomManager {
         this.owner = owner;
     }
 
-    public void addChatRoom(String roomName, User admin) {
+    public void addChatRoom(String roomName, User admin, String roomId) {
         Chatroom chatroom = new Chatroom(roomName, admin);
+        if (roomId != null){
+            chatroom.setRoomId(roomId);
+        }
 
         this.chatRooms.put(chatroom.getRoomId(), chatroom);
     }
@@ -49,7 +46,7 @@ public class ChatroomManager {
 
     public void sendMessage(Chatroom chatroom, Message msg) {
         // assume the parameters are all correct when calling this
-        User chatRoomOwner = chatroom.getAdmin();
+        User chatRoomOwner = chatroom.getOwner();
         sendMessageHelper(chatroom, msg, chatRoomOwner);
     }
 
@@ -61,6 +58,7 @@ public class ChatroomManager {
     }
 
     public String storeMessage(String chatroomId, String msgString, User sender, String msgId) {
+        System.out.println(this.chatRooms);
         if (!this.chatRooms.containsKey(chatroomId)){
             return "[FAIL]" + "chatroomId" + chatroomId + "not found";
         }
@@ -96,13 +94,13 @@ public class ChatroomManager {
 
     public String enrollUser(String chatroomId, String userId, String nickname, String ipAddress) {
         if (!this.chatRooms.containsKey(chatroomId)){
-            return "[FAIL]" + "chatroomId" + chatroomId + "not found";
+            return "[FAIL] chatroomId " + chatroomId + " not found";
         }
 
         User listener = new User(userId, nickname, ipAddress);
         Chatroom chatroom = chatRooms.get(chatroomId);
         chatroom.addListener(listener);
 
-        return "[SUCCESS]";
+        return JSONValue.toJSONString(chatroom.toDict());
     }
 }

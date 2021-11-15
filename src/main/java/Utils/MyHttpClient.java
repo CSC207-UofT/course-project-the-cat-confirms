@@ -10,7 +10,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 
 public class MyHttpClient {
-    public static void get(String urlString, HashMap<String, String> params) {
+    public static String get(String urlString, HashMap<String, String> params) {
         try{
             StringBuilder builder = new StringBuilder(urlString);
             if (params != null){
@@ -32,9 +32,11 @@ public class MyHttpClient {
 
             http.connect();
             System.out.println("code="+http.getResponseCode());
+            return new String(http.getInputStream().readAllBytes());
         } catch (Exception e){
             e.printStackTrace();
         }
+        return null;
     }
         public static void post(String urlString, HashMap<String, Object> data){
         try{

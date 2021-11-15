@@ -2,10 +2,14 @@ import Entities.User;
 import Gateways.ChatroomManager;
 import UseCases.UserProfile;
 import Utils.MyHttpClient;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
 
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Scanner;
+
+import static Utils.JSONable.toMap;
 
 public class SystemInOut {
     Scanner scanner;
@@ -29,7 +33,7 @@ public class SystemInOut {
 
             if (cmd.equals("new")){
                 String roomName = args[1];
-                chatroomManager.addChatRoom(roomName, owner);
+                chatroomManager.addChatRoom(roomName, owner,null);
 
              } else if (cmd.equals("chat")) {
                 String roomId = args[1];
@@ -47,7 +51,19 @@ public class SystemInOut {
                 params.put("nickname", owner.getNickname());
                 params.put("ipAddress", owner.getIpAddress());
 
-                MyHttpClient.get(ipAddress, params);
+                try{
+                    String response = MyHttpClient.get(ipAddress, params);
+                    JSONParser jsonParser = new JSONParser();
+                    JSONObject respJson = (JSONObject) jsonParser.parse(response);
+                    HashMap<String, Object> respDict = toMap(respJson);
+
+                    String roomName = (String) respDict.get("roomName");
+                    System.out.println(respDict.get("User"));
+                    chatroomManager.addChatRoom(roomName, new User("123"), roomId);
+                } catch (Exception e){
+                    e.printStackTrace();
+                }
+
             } else {
                 System.out.println(
                         "[Help Menu]\n"+
