@@ -1,8 +1,7 @@
 import Entities.User;
-import Repo.UserRepo;
-import Server.ChatRoomServer;
-import Server.UserServer;
-import UseCases.ChatroomManager;
+import Gateways.Repo.UserRepo;
+import Gateways.Server;
+import Gateways.ChatroomManager;
 import UseCases.UserProfile;
 
 import java.io.IOException;
@@ -13,20 +12,19 @@ public class Main {
         try {
             UserRepo userRepo = new UserRepo();
             User owner = null;
-            if (!userRepo.isLoaded()) {
+            if (!userRepo.isReady()) {
                 String ownerName = systemInOut.getLine("Initializing... Please enter your username:");
                 owner = new User(ownerName);
                 userRepo.initRepo(owner);
             } else {
-                owner = userRepo.getUser();
+                owner = userRepo.getOwner();
             }
 
-
             UserProfile userProfile = new UserProfile(owner);
-            ChatroomManager chatroomManager = new ChatroomManager();
+            ChatroomManager chatroomManager = new ChatroomManager(owner);
 
-            UserServer userServer = new UserServer(userProfile);
-            ChatRoomServer chatRoomServer = new ChatRoomServer(chatroomManager);
+            Server srv = new Server(userProfile, chatroomManager);
+            owner.setIpAddress(srv.getHostIP()+':'+srv.getPort());
 
             systemInOut.startInteract(userProfile, chatroomManager);
         } catch (IOException e) {

@@ -1,5 +1,7 @@
 package Entities.Message;
 
+import java.util.HashMap;
+
 import Entities.User;
 
 import java.util.ArrayList;
@@ -24,6 +26,11 @@ public class ActionMessage extends Message<String> {
         }
     }
 
+    @Override
+    public HashMap<String, Object> toDict() {
+        return null;
+    }
+  
     @Override
     public String toString() {
         return "ActionMessage{" +

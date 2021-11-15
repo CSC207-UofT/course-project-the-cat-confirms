@@ -12,6 +12,4 @@ public class UserProfile {
     public User getOwner() {
         return owner;
     }
-
-
 }
