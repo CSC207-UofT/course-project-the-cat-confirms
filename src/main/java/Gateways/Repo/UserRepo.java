@@ -1,7 +1,8 @@
-package Repo;
+package Gateways.Repo;
 
 import Entities.User;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class UserRepo extends JSONRepo {
@@ -11,9 +12,17 @@ public class UserRepo extends JSONRepo {
 
     public void initRepo(User owner) {
         this.set("owner", owner.toDict());
+        this.set("knownUsers", new ArrayList<User>());
 
         this.saveRepo();
         loaded = true;
+    }
+
+    public void addKnownUser(User user){
+        ArrayList<User> knowUsers = (ArrayList<User>) this.get("knownUsers");
+        knowUsers.add(user);
+
+        this.saveRepo();
     }
 
     public User getOwner() {

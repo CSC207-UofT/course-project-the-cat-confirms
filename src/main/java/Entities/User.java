@@ -8,6 +8,7 @@ import java.util.UUID;
 public class User implements JSONable {
     private final String userId;
     private String nickname;
+    private String ipAddress;
 
     public User(HashMap<String, Object> dict) {
         this.userId = (String) dict.get("userId");
@@ -21,9 +22,10 @@ public class User implements JSONable {
         this.nickname = nickname;
     }
 
-    public User(String userId, String nickname) {
+    public User(String userId, String nickname, String ipAddress) {
         this.userId = userId;
         this.nickname = nickname;
+        this.ipAddress = ipAddress;
     }
 
     public String getUserId() {
@@ -38,19 +40,31 @@ public class User implements JSONable {
         this.nickname = nickname;
     }
 
+    public void setIpAddress(String address){
+        this.ipAddress = address;
+    }
+
+    public String getIpAddress() {
+        return ipAddress;
+    }
+
     @Override
     public HashMap<String, Object> toDict() {
         HashMap<String, Object> dict = new HashMap<>();
+
         dict.put("userId", userId);
         dict.put("nickname", nickname);
+        dict.put("ipAddress", ipAddress);
+
         return dict;
     }
 
     @Override
     public String toString() {
-        return "User{" +
-                "userId='" + userId + '\'' +
-                ", nickname='" + nickname + '\'' +
+        return "{" +
+                "\"userId:\"" + userId + "\"," +
+                "\"nickname:\"" + nickname + "\"," +
+                "\"ipAddress:\"" + ipAddress + "\"," +
                 '}';
     }
 }

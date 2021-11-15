@@ -2,6 +2,7 @@ package Entities.Message;
 
 import Entities.User;
 
+import java.util.HashMap;
 import java.util.UUID;
 
 public class TextMessage extends Message<String> {
@@ -20,5 +21,16 @@ public class TextMessage extends Message<String> {
                 "sender='" + this.sender + '\'' +
                 "msg='" + this.msg + '\'' +
                 '}';
+    }
+
+    @Override
+    public HashMap<String, Object> toDict() {
+        HashMap<String, Object> dict = new HashMap<>();
+
+        dict.put("msgId", msgId);
+        dict.put("msgString", "txt="+msg);
+        dict.put("sender", sender.toDict());
+
+        return dict;
     }
 }
