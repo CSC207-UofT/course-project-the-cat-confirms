@@ -15,7 +15,7 @@ public class ImageMessage extends Message<File>{
     @Override
     public String toString() {
         return "ImageMessage{" +
-                "sender='" + this.sender + '\'' +
+                "sender='" + this.sender.getNickname() + '\'' +
                 "image='" + this.image + '\'' +
                 '}';
     }
