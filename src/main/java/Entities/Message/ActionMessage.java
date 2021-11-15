@@ -27,9 +27,9 @@ public class ActionMessage extends Message<String> {
     @Override
     public String toString() {
         return "ActionMessage{" +
-                "sender='" + this.sender + '\'' +
+                "sender='" + this.sender.getNickname() + '\'' +
                 "action='" + this.action + '\'' +
-                "to original message='" + this.original + '\'' +
+                " the original message='" + this.original + '\'' +
                 '}';
     }
 }
