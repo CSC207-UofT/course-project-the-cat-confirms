@@ -1,8 +1,9 @@
 package Entities.Message;
 
 import Entities.User;
+import Utils.JSONable;
 
-public class Message<T> {
+public abstract class Message<T> implements JSONable {
     protected User sender;
     protected String msgId;
 
@@ -13,5 +14,9 @@ public class Message<T> {
         }
 
         return msg;
+    }
+
+    public void setMsgId(String msgId){
+        this.msgId = msgId;
     }
 }

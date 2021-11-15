@@ -1,5 +1,5 @@
 import Entities.User;
-import Repo.UserRepo;
+import Gateways.Repo.UserRepo;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;

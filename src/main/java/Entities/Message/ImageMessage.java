@@ -1,27 +1,11 @@
 package Entities.Message;
 
-import Entities.User;
+import java.util.HashMap;
 
-import java.io.File;
-
-public class ImageMessage extends Message<File> {
-//    private final File image;
-//
-//    public ImageMessage(File img, User sender) {
-//        this.image = img;
-//        this.sender = sender;
-//    }
-//
-//    @Override
-//    public String toString() {
-//        return "TextMessage{" +
-//                "sender='" + this.sender + '\'' +
-//                "msg='" + this.msg + '\'' +
-//                '}';
-//
-//
-//        public File getImage () {
-//            return image;
-//        }
-//    }
+public class ImageMessage extends Message<String> {
+    @Override
+    public HashMap<String, Object> toDict() {
+        return null;
+    }
+    // TODO: implement ME
 }

@@ -1,6 +1,7 @@
-package Entities;
+package UseCases;
 
 import Entities.Message.Message;
+import Entities.User;
 import Utils.JSONable;
 
 import java.util.ArrayList;
@@ -11,6 +12,7 @@ public class Chatroom implements JSONable {
     private final String roomId;
     private final ArrayList<Message> messages;
     private final User admin;
+    private final ArrayList<User> listeners;
     private String roomName;
 
     public Chatroom(String roomName, User admin) {
@@ -22,6 +24,8 @@ public class Chatroom implements JSONable {
         this.roomName = roomName;
         this.admin = admin;
         this.messages = new ArrayList<>();
+        this.listeners = new ArrayList<>();
+
         System.out.println("Created chatroom " + roomName + " with id=" + this.roomId);
     }
 
@@ -51,6 +55,18 @@ public class Chatroom implements JSONable {
         return ret;
     }
 
+    public User getAdmin() {
+        return admin;
+    }
+
+    public void addListener(User listener){
+        this.listeners.add(listener);
+    }
+
+    public ArrayList<User> getListeners() {
+        return this.listeners;
+    }
+
     @Override
     public HashMap<String, Object> toDict() {
         HashMap<String, Object> dict = new HashMap<>();
@@ -59,4 +75,6 @@ public class Chatroom implements JSONable {
         dict.put("messages", this.messages);
         return dict;
     }
+
+
 }

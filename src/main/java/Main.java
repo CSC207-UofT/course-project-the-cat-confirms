@@ -1,7 +1,7 @@
 import Entities.User;
-import Repo.UserRepo;
-import Server.Server;
-import UseCases.ChatroomManager;
+import Gateways.Repo.UserRepo;
+import Gateways.Server;
+import Gateways.ChatroomManager;
 import UseCases.UserProfile;
 
 import java.io.IOException;
@@ -20,11 +20,11 @@ public class Main {
                 owner = userRepo.getOwner();
             }
 
-
             UserProfile userProfile = new UserProfile(owner);
-            ChatroomManager chatroomManager = new ChatroomManager();
+            ChatroomManager chatroomManager = new ChatroomManager(owner);
 
             Server srv = new Server(userProfile, chatroomManager);
+            owner.setIpAddress(srv.getHostIP()+':'+srv.getPort());
 
             systemInOut.startInteract(userProfile, chatroomManager);
         } catch (IOException e) {
