@@ -1,11 +1,24 @@
 package Entities.Message;
 
-import java.util.HashMap;
+import Entities.User;
 
 public class ActionMessage extends Message<String> {
-    @Override
-    public HashMap<String, Object> toDict() {
-        return null;
+    private final String action;
+    public final TextMessage original;
+
+
+    public ActionMessage(String act, User sender, TextMessage original) {
+        this.action = act;
+        this.sender = sender;
+        this.original = original;
     }
-    // TODO: implement ME
+
+    @Override
+    public String toString() {
+        return "TextMessage{" +
+                "sender='" + this.sender + '\'' +
+                "action='" + this.action + '\'' +
+                "to original message='" + this.original + '\'' +
+                '}';
+    }
 }
