@@ -7,7 +7,6 @@ import java.util.HashMap;
 public class UserRepo extends Repo {
     public UserRepo() {
         super("resources/user_repo.json");
-
     }
 
     public static void main(String[] args) {
