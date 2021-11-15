@@ -77,6 +77,4 @@ public class SystemInOut {
 
             System.out.println("Please enter a command:");
         }
-
-    }
 }

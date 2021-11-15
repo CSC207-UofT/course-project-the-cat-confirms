@@ -18,7 +18,7 @@ public class TextMessage extends Message<String> {
     @Override
     public String toString() {
         return "TextMessage{" +
-                "sender='" + this.sender + '\'' +
+                "sender='" + this.sender.getNickname() + '\'' +
                 "msg='" + this.msg + '\'' +
                 '}';
     }
