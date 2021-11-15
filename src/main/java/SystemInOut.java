@@ -49,13 +49,13 @@ public class SystemInOut {
             }
             System.out.println("Please enter the correct command");
         }
+    }
+}
 //            else if(line.equals("history")){
 //                System.out.println("Please enter a room name");
 //                while (scanner.hasNext()) {
 //                }
 //            }
-        }
-    }
 //        System.out.println("Please enter a command:");
 //        while (scanner.hasNext()) {
 //            String line = scanner.nextLine();
