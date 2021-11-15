@@ -1,8 +1,8 @@
-import Entities.Chatroom;
-import Entities.Message.TextMessage;
+import Entities.User;
 import UseCases.ChatroomManager;
 import UseCases.UserProfile;
 
+import java.util.Arrays;
 import java.util.Scanner;
 
 public class SystemInOut {
@@ -19,6 +19,7 @@ public class SystemInOut {
 
     public void startInteract(UserProfile userProfile, ChatroomManager chatroomManager) {
         System.out.println("Please enter a command:");
+        User owner = userProfile.getOwner();
         while (scanner.hasNext()) {
             String line = scanner.nextLine();
             String[] args = line.split(" ");
@@ -27,18 +28,16 @@ public class SystemInOut {
                 String sub_cmd = args[1];
                 if (sub_cmd.equals("new")) {
                     String roomName = args[2];
-                    Chatroom chatroom = new Chatroom(roomName, userProfile.getOwner());
-                    chatroomManager.addChatRoom(chatroom);
-                } else {
-                    String roomName = sub_cmd;
-
-                    String msgText = args[2];
-                    TextMessage msg = new TextMessage(msgText, userProfile.getOwner());
-
-                    for (Chatroom chatroom :
-                            chatroomManager.getChatRooms()) {
-                        chatroom.addMessage(msg);
+                    try{
+                        chatroomManager.addChatRoom(roomName, owner);
+                    } catch (IllegalArgumentException e){
+                        System.out.println(e.getMessage());
                     }
+                } else {
+                    String[] msgWord = Arrays.copyOfRange(args, 2, args.length);
+                    String msgString = String.join(" ", msgWord);
+                    String status = chatroomManager.sendMessage(sub_cmd, msgString, owner);
+                    System.out.println(status);
                 }
             }
 

@@ -14,6 +14,10 @@ public class Chatroom implements JSONable {
     private String roomName;
 
     public Chatroom(String roomName, User admin) {
+        if (roomName.equals("new")){
+            throw new IllegalArgumentException("Cannot name a room as new");
+        }
+
         this.roomId = UUID.randomUUID().toString();
         this.roomName = roomName;
         this.admin = admin;
