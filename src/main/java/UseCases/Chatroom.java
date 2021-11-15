@@ -9,20 +9,20 @@ import java.util.HashMap;
 import java.util.UUID;
 
 public class Chatroom implements JSONable {
-    private final String roomId;
+    private String roomId;
     private final ArrayList<Message> messages;
-    private final User admin;
+    private final User owner;
     private final ArrayList<User> listeners;
     private String roomName;
 
-    public Chatroom(String roomName, User admin) {
+    public Chatroom(String roomName, User owner) {
         if (roomName.equals("new")){
             throw new IllegalArgumentException("Cannot name a room as new");
         }
 
         this.roomId = UUID.randomUUID().toString();
         this.roomName = roomName;
-        this.admin = admin;
+        this.owner = owner;
         this.messages = new ArrayList<>();
         this.listeners = new ArrayList<>();
 
@@ -31,6 +31,10 @@ public class Chatroom implements JSONable {
 
     public String getRoomId() {
         return roomId;
+    }
+
+    public void setRoomId(String roomId){
+        this.roomId = roomId;
     }
 
     public String getRoomName() {
@@ -55,8 +59,8 @@ public class Chatroom implements JSONable {
         return ret;
     }
 
-    public User getAdmin() {
-        return admin;
+    public User getOwner() {
+        return owner;
     }
 
     public void addListener(User listener){
@@ -73,6 +77,8 @@ public class Chatroom implements JSONable {
         dict.put("roomId", this.roomId);
         dict.put("roomName", this.roomName);
         dict.put("messages", this.messages);
+        dict.put("owner", this.owner.toDict());
+
         return dict;
     }
 
