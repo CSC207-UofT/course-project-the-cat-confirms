@@ -1,9 +1,10 @@
 package Entities.Message;
 
+import java.util.HashMap;
+
 import Entities.User;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public class ActionMessage extends Message<String> {
     private final String action;
@@ -26,16 +27,16 @@ public class ActionMessage extends Message<String> {
     }
 
     @Override
+    public HashMap<String, Object> toDict() {
+        return null;
+    }
+  
+    @Override
     public String toString() {
         return "ActionMessage{" +
                 "sender='" + this.sender.getNickname() + '\'' +
                 "action='" + this.action + '\'' +
                 "the original message='" + this.original + '\'' +
                 '}';
-    }
-
-    @Override
-    public HashMap<String, Object> toDict() {
-        return null;
     }
 }

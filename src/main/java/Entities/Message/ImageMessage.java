@@ -13,6 +13,11 @@ public class ImageMessage extends Message<File>{
     }
 
     @Override
+    public HashMap<String, Object> toDict() {
+        return null;
+    }
+  
+    @Override
     public String toString() {
         return "ImageMessage{" +
                 "sender='" + this.sender.getNickname() + '\'' +
