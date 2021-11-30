@@ -8,7 +8,7 @@ import java.util.UUID;
 public class TextMessage extends Message<String> {
     private final String msg;
 
-    protected TextMessage(String str, User sender) {
+    public TextMessage(String str, User sender) {
         this.msg = str;
 
         this.msgId = UUID.randomUUID().toString();

@@ -3,6 +3,7 @@ package Entities.Message;
 import Entities.User;
 
 import java.io.File;
+import java.util.HashMap;
 
 public class ImageMessage extends Message<File>{
     private final File image;
