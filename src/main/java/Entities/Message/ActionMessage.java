@@ -3,6 +3,7 @@ package Entities.Message;
 import Entities.User;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class ActionMessage extends Message<String> {
     private final String action;
@@ -31,5 +32,10 @@ public class ActionMessage extends Message<String> {
                 "action='" + this.action + '\'' +
                 "the original message='" + this.original + '\'' +
                 '}';
+    }
+
+    @Override
+    public HashMap<String, Object> toDict() {
+        return null;
     }
 }
