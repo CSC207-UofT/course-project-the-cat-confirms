@@ -21,6 +21,12 @@ export class NewRoomDialog extends React.Component {
         });
     };
 
+    handleRoomNameKeyPress = (ev) => {
+        if (ev.key === "Enter"){
+            const create_button = document.getElementById("new-room-create");
+            create_button.click();
+        }
+    }
     render() {
         const {newRoomDialogOpen} = this.props.menu.state;
 
@@ -39,6 +45,7 @@ export class NewRoomDialog extends React.Component {
                         type="text"
                         fullWidth
                         variant="standard"
+                        onKeyPress={this.handleRoomNameKeyPress}
                     />
                 </DialogContent>
                 <DialogActions>

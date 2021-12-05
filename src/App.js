@@ -1,25 +1,30 @@
 import React from 'react';
 import {MainPage} from './MainPage/MainPage';
 import {ChatroomDialog} from './Dialogs/ChatroomDialog';
+import {getOwnerProfile} from './actions/owner';
+
 
 export class App extends React.Component {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
+        const {
+            match: {params},
+        } = props;
+
+        this.port = parseInt(params.port);
+
+        this.userId = "";
+        this.ipAddress = "";
+
         this.state = {
-            chatRooms: {
-                1638247291513: {
-                    roomName: 'cat-bites-butts',
-                    messages: {
-                        1638247291514: {
-                            sender: 'Peter',
-                            type: 'txt',
-                            msg: 'hello world'
-                        },
-                    }
-                }
-            },
+            nickname: "",
+            chatRooms: {},
             activeChatroomId: null
         };
+    }
+
+    componentDidMount() {
+        getOwnerProfile(this)
     }
 
     render() {
