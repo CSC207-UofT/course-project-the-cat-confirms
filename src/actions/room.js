@@ -8,7 +8,6 @@ export const newRoom = (app, roomName) => {
             roomName: roomName
         }
     }).then((response) => {
-        console.log(response.data);
         const {messages, owner, roomId, roomName} = response.data;
         chatRooms[roomId] = {
             roomName:roomName,
@@ -24,22 +23,40 @@ export const newRoom = (app, roomName) => {
 export const sendTextMsg = (app, msg) => {
     const {chatRooms, activeChatroomId} = app.state;
 
-    // axios.get(`http://${chatRooms[activeChatroomId].owner.ipAddress}/chatroom_send`, {
-    //     params: {
-    //         roomId: activeChatroomId,
-    //         msgStr
-    //     }
-    // }).then((response) => {
-    //     console.log(response)
-    // });
-
-
-    // chatRooms[activeChatroomId].messages[Date.now()] = {
-    //     sender: 'Junhao',
-    //     type: 'txt',
-    //     msg: msg
-    // };
-    // app.setState({
-    //     chatRooms: chatRooms
-    // });
+    axios.post(`http://${chatRooms[activeChatroomId].owner.ipAddress}/chatroom_send`, 'txt-' + msg, {
+        params: {
+            roomId: activeChatroomId,
+            senderId: app.ownerId
+        },
+    }).then((response) => {
+        console.log(response)
+    });
 };
+
+export const pollMsg = (app) => {
+    const {chatRooms, activeChatroomId} = app.state;
+
+    const chatroom = chatRooms[activeChatroomId];
+    const chatroom_messages = chatroom.messages;
+    let timestamp = 0;
+    if (chatroom_messages.length > 0){
+        timestamp = chatroom_messages[chatroom_messages.length - 1].timestamp;
+    }
+
+    app.cancelTokenSource.cancel("new poll started");
+    app.cancelTokenSource = axios.CancelToken.source();
+    axios.get(`http://${chatroom.owner.ipAddress}/chatroom_view`, {
+        params: {
+            roomId: activeChatroomId,
+            timestamp: timestamp
+        },
+        cancelToken: app.cancelTokenSource.token
+    }).then((response) => {
+        chatroom.messages = chatroom_messages.concat(response.data);
+        app.setState({
+            chatRooms: chatRooms
+        });
+    }).catch(reason => {
+        console.log(reason);
+    });
+}

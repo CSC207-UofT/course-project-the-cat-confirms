@@ -6,7 +6,7 @@ export const getOwnerProfile = (app) =>{
         .then((response)=>{
             const {nickname, ipAddress, userId} = response.data;
 
-            app.userId = userId;
+            app.ownerId = userId;
             app.ipAddress = ipAddress;
             app.setState({
                 nickname:nickname

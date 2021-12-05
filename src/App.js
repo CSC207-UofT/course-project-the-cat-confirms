@@ -2,6 +2,8 @@ import React from 'react';
 import {MainPage} from './MainPage/MainPage';
 import {ChatroomDialog} from './Dialogs/ChatroomDialog';
 import {getOwnerProfile} from './actions/owner';
+import axios from 'axios';
+import {pollMsg} from './actions/room';
 
 
 export class App extends React.Component {
@@ -12,8 +14,9 @@ export class App extends React.Component {
         } = props;
 
         this.port = parseInt(params.port);
+        this.cancelTokenSource = axios.CancelToken.source();
 
-        this.userId = "";
+        this.ownerId = "";
         this.ipAddress = "";
 
         this.state = {

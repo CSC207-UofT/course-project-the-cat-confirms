@@ -17,6 +17,13 @@ export class MessageInput extends React.Component {
         })
     }
 
+    handleKeyPress = (ev) => {
+        if (ev.key === 'Enter'){
+            const send_text_button = document.getElementById('send-text-button');
+            send_text_button.click();
+        }
+    }
+
     handleSend = () => {
         const {app} = this.props;
         const {textInput} = this.state;
@@ -37,20 +44,19 @@ export class MessageInput extends React.Component {
                 <TextField
                     id={'text-input'}
                     onChange={this.handleTextInputChange}
+                    onKeyPress={this.handleKeyPress}
                     value={textInput}
                     hiddenLabel
                     fullWidth
                 />
                 {(textInput === '') ?
                     <IconButton><AddCircle fontSize={"large"}/></IconButton>
-                    : <Button onClick={this.handleSend} variant={'contained'} color={'info'}>
+                    : <Button id={'send-text-button'} onClick={this.handleSend} variant={'contained'} color={'info'}>
                         Send
                     </Button>}
 
             </div>
         )
-
     }
-
 
 }
