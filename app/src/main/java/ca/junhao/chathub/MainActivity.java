@@ -16,7 +16,7 @@ public class MainActivity extends AppCompatActivity {
         // setup webview for the web front
         WebView myWebView = findViewById(R.id.webview);
         myWebView.getSettings().setJavaScriptEnabled(true);
-        myWebView.loadUrl("http://192.168.2.88");
+        myWebView.loadUrl("file:///android_asset/web_build/index.html");
 
 
     }
