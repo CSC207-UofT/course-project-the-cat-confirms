@@ -8,7 +8,7 @@ android {
     defaultConfig {
         applicationId "ca.junhao.chathub"
         minSdk 26
-        targetSdk 31
+        targetSdk 26
         versionCode 1
         versionName "1.0"
 
@@ -28,6 +28,11 @@ android {
 }
 
 dependencies {
+    implementation files("libs/http-20070405.jar")
+    implementation files("libs/sun-common-server.jar")
+
+    implementation 'com.googlecode.json-simple:json-simple:1.1.1'
+
 
     implementation 'androidx.appcompat:appcompat:1.2.0'
     implementation 'com.google.android.material:material:1.3.0'
