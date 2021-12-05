@@ -14,9 +14,9 @@ export const newRoom = (app, roomName) => {
 export const sendTextMsg = (app, msg) => {
     const {chatRooms, activeChatroomId} = app.state;
     chatRooms[activeChatroomId].messages[Date.now()] = {
-            sender: 'Junhao',
-            type: 'txt',
-            msg: msg
+        sender: 'Junhao',
+        type: 'txt',
+        msg: msg
     }
     app.setState({
         chatRooms: chatRooms

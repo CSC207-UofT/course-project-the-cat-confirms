@@ -1,8 +1,5 @@
 import * as React from 'react';
-import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
-import ListItemText from '@mui/material/ListItemText';
-import ListItem from '@mui/material/ListItem';
 import List from '@mui/material/List';
 import Divider from '@mui/material/Divider';
 import AppBar from '@mui/material/AppBar';
@@ -10,7 +7,7 @@ import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import CloseIcon from '@mui/icons-material/Close';
-import {ListItemButton, Slide} from '@mui/material';
+import {Slide} from '@mui/material';
 import {MessageItem} from '../Message/MessageItem';
 import {MessageInput} from '../Message/MessageInput';
 import {MoreVert} from '@mui/icons-material';
@@ -30,7 +27,7 @@ export class ChatroomDialog extends React.Component {
 
     render() {
         const {activeChatroomId, chatRooms} = this.props.app.state;
-        if (activeChatroomId == null){
+        if (activeChatroomId == null) {
             return (<div/>);
         }
 
@@ -39,7 +36,7 @@ export class ChatroomDialog extends React.Component {
         const msgList = [];
         for (const [msgId, msg] of Object.entries(room.messages)) {
             msgList.push(<MessageItem key={msgId} {...msg}/>);
-            msgList.push(<Divider key={msgId+'_div'}/>);
+            msgList.push(<Divider key={msgId + '_div'}/>);
         }
 
         return (

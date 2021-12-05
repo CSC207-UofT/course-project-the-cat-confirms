@@ -22,7 +22,7 @@ export class MainPage extends React.Component {
                     {room.roomName}
                 </ListItemButton>
             </ListItem>);
-            roomList.push(<Divider key={roomId+'_div'}/>);
+            roomList.push(<Divider key={roomId + '_div'}/>);
         }
 
         return (<div>
