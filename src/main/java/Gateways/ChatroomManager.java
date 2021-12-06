@@ -74,7 +74,7 @@ public class ChatroomManager {
         Chatroom chatroom = chatRooms.get(chatroomId);
         Message msg = null;
         if (msgType.equals("txt=")){
-            msg = messageMaker(msgText, sender);
+            msg = messageMaker(msgText, sender, null);
             chatroom.addMessage(msg);
         } else {
             return "[FAIL]" + "Message type " + msgType + " unsupported";

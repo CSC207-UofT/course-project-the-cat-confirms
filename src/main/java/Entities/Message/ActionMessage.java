@@ -12,7 +12,7 @@ public class ActionMessage extends Message<String> {
 
 
 
-    public ActionMessage(String act, User sender, TextMessage original) {
+    public ActionMessage(String act, User sender, TextMessage original){
         ArrayList<String> listOfActions = new ArrayList<>();
         listOfActions.add("Like");
         listOfActions.add("Dislike");
