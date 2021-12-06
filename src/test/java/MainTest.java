@@ -1,5 +1,5 @@
 import Entities.User;
-import Repo.UserRepo;
+import Gateways.Repo.UserRepo;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -10,11 +10,11 @@ public class MainTest {
         SystemInOut systemInOut = new SystemInOut();
         UserRepo userRepo = new UserRepo();
         User owner = null;
-        if (!userRepo.isLoaded()) {
+        if (!userRepo.isReady()) {
             owner = new User("Junhao");
             userRepo.initRepo(owner);
         } else {
-            owner = userRepo.getUser();
+            owner = userRepo.getOwner();
         }
         Assertions.assertEquals("Junhao", owner.getNickname());
     }
