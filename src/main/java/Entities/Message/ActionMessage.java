@@ -1,5 +1,7 @@
 package Entities.Message;
 
+import java.util.HashMap;
+
 import Entities.User;
 //
 //import java.util.ArrayList;
@@ -7,7 +9,6 @@ import Entities.User;
 public class ActionMessage extends Message<String> {
     public final TextMessage original;
 //    private final String action;
-
 //
 //
 //

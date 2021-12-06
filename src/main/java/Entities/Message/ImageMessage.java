@@ -7,9 +7,6 @@ import javax.swing.*;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.util.Base64;
 
 public class ImageMessage extends Message<File>{
     private final File image;
@@ -26,6 +23,11 @@ public class ImageMessage extends Message<File>{
         this.buffimg = buffimg;
     }
 
+    @Override
+    public HashMap<String, Object> toDict() {
+        return null;
+    }
+  
     @Override
     public String toString() {
         return "ImageMessage{" +

@@ -1,9 +1,15 @@
-import Entities.Chatroom;
-import Entities.Message.TextMessage;
-import UseCases.ChatroomManager;
+import Entities.User;
+import Gateways.ChatroomManager;
 import UseCases.UserProfile;
+import Utils.MyHttpClient;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
 
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.Scanner;
+
+import static Utils.JSONable.toMap;
 
 public class SystemInOut {
     Scanner scanner;
@@ -18,54 +24,59 @@ public class SystemInOut {
     }
 
     public void startInteract(UserProfile userProfile, ChatroomManager chatroomManager) {
-        System.out.println("Please enter a command in 'chat':");
+        System.out.println("Please enter a command:");
+        User owner = userProfile.getOwner();
         while (scanner.hasNext()) {
             String line = scanner.nextLine();
-            if (line.equals("chat")) {
-                System.out.println("Please enter a room name");
-                while (scanner.hasNext()) {
-                    String roomName = scanner.nextLine();
-                    System.out.println("creating a new chat room");
-                    Chatroom chatroom = new Chatroom(roomName, userProfile.getOwner());
-                    chatroomManager.addChatRoom(chatroom);
-                    System.out.println("type what you want");
-                    while (scanner.hasNext()) {
-                        String msgText = scanner.nextLine();
-                        TextMessage msg = new TextMessage(msgText, userProfile.getOwner());
-                        chatroom.addMessage(msg);
-                        System.out.println("type what you want");
-                        }
-                    }
+            String[] args = line.split(" ");
+            String cmd = args[0];
+
+            if (cmd.equals("new")){
+                String roomName = args[1];
+                chatroomManager.addChatRoom(roomName, owner,null);
+
+             } else if (cmd.equals("chat")) {
+                String roomId = args[1];
+                String[] msgWord = Arrays.copyOfRange(args, 2, args.length);
+                String msgString = String.join(" ", msgWord);
+                String status = chatroomManager.storeMessage(roomId, msgString, owner, null);
+                System.out.println(status);
+            } else if(cmd.equals("enroll")){
+                String ipAddress = args[1];
+                String roomId = args[2];
+
+                HashMap<String, String> params = new HashMap<>();
+                params.put("roomId", roomId);
+                params.put("userId", owner.getUserId());
+                params.put("nickname", owner.getNickname());
+                params.put("ipAddress", owner.getIpAddress());
+
+                try{
+                    String response = MyHttpClient.get(ipAddress, params);
+                    JSONParser jsonParser = new JSONParser();
+                    JSONObject respJson = (JSONObject) jsonParser.parse(response);
+                    HashMap<String, Object> respDict = toMap(respJson);
+
+                    String roomName = (String) respDict.get("roomName");
+                    System.out.println(respDict.get("User"));
+                    chatroomManager.addChatRoom(roomName, new User("123"), roomId);
+                } catch (Exception e){
+                    e.printStackTrace();
                 }
+
+            } else {
+                System.out.println(
+                        "[Help Menu]\n"+
+                        "You may issue the following commands: \n"+
+                                "\tnew ROOM_NAME\n"+
+                                "\tchat ROOM_NAME MSG_TYPE=MSG\n"+
+                                "\t\tMSG_TYPE is one of (txt, img, act)\n"+
+                                "\tenrol ENROLLMENT_SECRET\n"
+                        );
             }
+
+            System.out.println("Please enter a command:");
         }
+
+    }
 }
-//        System.out.println("Please enter a command:");
-//        while (scanner.hasNext()) {
-//            String line = scanner.nextLine();
-//            String[] args = line.split(" ");
-//            String cmd = args[0];
-//            if (cmd.equals("chat")) {
-//                String sub_cmd = args[1];
-//                if (sub_cmd.equals("new")) {
-//                    String roomName = args[2];
-//                    Chatroom chatroom = new Chatroom(roomName, userProfile.getOwner());
-//                    chatroomManager.addChatRoom(chatroom);
-//                } else {
-//                    String roomName = sub_cmd;
-//
-//                    String msgText = args[2];
-//                    TextMessage msg = new TextMessage(msgText, userProfile.getOwner());
-//
-//                    for (Chatroom chatroom :
-//                            chatroomManager.getChatRooms()) {
-//                        chatroom.addMessage(msg);
-//                    }
-//                }
-//            }
-//
-//
-//            System.out.println("Please enter a command:");
-//        }
-//
-//    }
