@@ -1,5 +1,6 @@
 import Entities.User;
 import Gateways.ChatroomManager;
+import UseCases.Chatroom;
 import UseCases.UserProfile;
 import Utils.MyHttpClient;
 import org.json.simple.JSONObject;
@@ -33,7 +34,8 @@ public class SystemInOut {
 
             if (cmd.equals("new")){
                 String roomName = args[1];
-                chatroomManager.addChatRoom(roomName, owner,null);
+//                chatroomManager.addChatRoom(roomName, owner,null);
+                chatroomManager.addChatRoom(new Chatroom(roomName,owner));
 
              } else if (cmd.equals("chat")) {
                 String roomId = args[1];
@@ -59,7 +61,8 @@ public class SystemInOut {
 
                     String roomName = (String) respDict.get("roomName");
                     System.out.println(respDict.get("User"));
-                    chatroomManager.addChatRoom(roomName, new User("123"), roomId);
+//                    chatroomManager.addChatRoom(roomName, new User("123"), roomId);
+                    chatroomManager.addChatRoom(new Chatroom(roomName,new User("123")));
                 } catch (Exception e){
                     e.printStackTrace();
                 }

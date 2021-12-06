@@ -7,6 +7,7 @@ import Utils.MyHttpClient;
 import org.json.simple.JSONValue;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 
 import static Entities.Message.Message.messageMaker;
@@ -21,17 +22,21 @@ public class ChatroomManager {
         this.owner = owner;
     }
 
-    public void addChatRoom(String roomName, User admin, String roomId) {
-        Chatroom chatroom = new Chatroom(roomName, admin);
-        if (roomId != null){
-            chatroom.setRoomId(roomId);
-        }
-
+//    public void addChatRoom(String roomName, User admin, String roomId) {
+//        Chatroom chatroom = new Chatroom(roomName, admin);
+//        if (roomId != null){
+//            chatroom.setRoomId(roomId);
+//        }
+//
+//        this.chatRooms.put(chatroom.getRoomId(), chatroom);
+//    }
+    public void addChatRoom(Chatroom chatroom) {
         this.chatRooms.put(chatroom.getRoomId(), chatroom);
     }
 
-    public ArrayList<Chatroom> getChatRooms() {
-        return (ArrayList<Chatroom>) chatRooms.values();
+
+    public Collection<Chatroom> getChatRooms() {
+        return chatRooms.values();
     }
 
     private void sendMessageHelper(Chatroom chatroom, Message msg, User listener) {
