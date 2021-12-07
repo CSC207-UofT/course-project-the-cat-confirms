@@ -234,14 +234,15 @@ public class Server {
                 String ipAddress = (String) bodyParams.get("ipAddress");
 
                 userProfile.addUser(userId, nickname, ipAddress);
-                String response = chatroomManager.enrollUser(chatRoomId, userId, nickname, ipAddress);
+                HashMap<String, Object> chatroomDict = chatroomManager.getChatRoomDict(chatRoomId);
+                String response = JSONValue.toJSONString(chatroomDict);
 
                 t.sendResponseHeaders(200, response.length());
                 OutputStream os = t.getResponseBody();
                 os.write(response.getBytes());
                 os.close();
             } catch (IOException | ParseException e) {
-//            e.printStackTrace();
+            e.printStackTrace();
             }
         }
     }

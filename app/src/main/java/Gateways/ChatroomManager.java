@@ -29,32 +29,9 @@ public class ChatroomManager {
         return chatroom;
     }
 
-    public ArrayList<Chatroom> getChatRooms() {
-        return (ArrayList<Chatroom>) chatRooms.values();
+    public HashMap<String, Object> getChatRoomDict(String roomId) {
+        return this.chatRooms.get(roomId).toDict();
     }
-
-//    private void sendMessageHelper(Chatroom chatroom, Message msg, User listener) {
-//        String urlString = "http://"+ listener.getIpAddress() + "/msg_in";
-//
-//        HashMap<String, Object> data = new HashMap<>();
-//        data.put("chatroomId", chatroom.getRoomId());
-//        data.put("msg", msg.toDict());
-//
-////        MyHttpClient.post(urlString, data);
-//    }
-
-//    public void sendMessage(Chatroom chatroom, Message msg) {
-//        // assume the parameters are all correct when calling this
-//        User chatRoomOwner = chatroom.getOwner();
-//        sendMessageHelper(chatroom, msg, chatRoomOwner);
-//    }
-//
-//    public void broadcastMessage(Chatroom chatroom, Message msg) {
-//        for (User listener:
-//             chatroom.getListeners()) {
-//            sendMessageHelper(chatroom, msg, listener);
-//        }
-//    }
 
     public String storeMessage(String chatroomId, String msgString, String sender) {
         Chatroom chatroom = chatRooms.get(chatroomId);
@@ -87,20 +64,15 @@ public class ChatroomManager {
         return owner;
     }
 
-//    public ArrayList<String> getMessages(String chatroomId) {
-//        return chatRooms.get(chatroomId).getMessages();
+//    public String enrollUser(String chatroomId, String userId, String nickname, String ipAddress) {
+//        if (!this.chatRooms.containsKey(chatroomId)){
+//            return "[FAIL] chatroomId " + chatroomId + " not found";
+//        }
+//
+//        User listener = new User(userId, nickname, ipAddress);
+//        Chatroom chatroom = chatRooms.get(chatroomId);
+//        chatroom.addListener(listener);
+//
+//        return JSONValue.toJSONString(chatroom.toDict());
 //    }
-
-
-    public String enrollUser(String chatroomId, String userId, String nickname, String ipAddress) {
-        if (!this.chatRooms.containsKey(chatroomId)){
-            return "[FAIL] chatroomId " + chatroomId + " not found";
-        }
-
-        User listener = new User(userId, nickname, ipAddress);
-        Chatroom chatroom = chatRooms.get(chatroomId);
-        chatroom.addListener(listener);
-
-        return JSONValue.toJSONString(chatroom.toDict());
-    }
 }
