@@ -2,7 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/web.iml" filepath="$PROJECT_DIR$/.idea/web.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/ChatHub.iml" filepath="$PROJECT_DIR$/.idea/modules/ChatHub.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/ChatHub.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/ChatHub.app.iml" />
     </modules>
   </component>
 </project>

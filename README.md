@@ -10,5 +10,5 @@ Note these steps are also required for first-time setups:
 ```
 cd web
 npm install
-npm run win-build
+npm run android-build
 ```
