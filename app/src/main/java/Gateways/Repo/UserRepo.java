@@ -1,38 +1,32 @@
 package Gateways.Repo;
 
-import Entities.User;
-
-import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
-public class UserRepo extends JSONRepo {
-    private User owner;
-
+public class UserRepo extends JSONRepo implements IUserRepo {
     public UserRepo(String path) {
         super(path);
-
-        if (!path.equals("")) {
-            this.owner =  new User((HashMap<String, Object>) this.get("owner"));
-        }
     }
 
-    public void initRepo(String ownerName) {
-        User owner = new User(ownerName);
-        this.set("owner", owner.toDict());
+    @Override
+    public HashMap<String, Object> getOwnerInfo() {
+        return (HashMap<String, Object>) this.get("owner");
+    }
 
-        this.owner = owner;
-
+    @Override
+    public void setOwnerInfo(HashMap<String, Object> ownerInfo) {
+        this.set("owner", ownerInfo);
         this.saveRepo();
-        loaded = true;
     }
 
-    public User getOwner() {
-        return owner;
+    @Override
+    public HashMap<String, HashMap<String, Object>> getUserInfos() {
+        return (HashMap<String, HashMap<String, Object>>) this.get("users");
     }
 
-    public void setOwner(User owner) {
-        this.owner = owner;
-        this.set("owner", owner.toDict());
+    @Override
+    public void setUserInfos(HashMap<String, HashMap<String, Object>> userInfos) {
+        this.set("users", userInfos);
         this.saveRepo();
     }
 }

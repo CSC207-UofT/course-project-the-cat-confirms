@@ -13,8 +13,6 @@ public class User implements JSONable {
     public User(HashMap<String, Object> dict) {
         this.userId = (String) dict.get("userId");
         this.nickname = (String) dict.get("nickname");
-
-        System.out.println(this.userId + this.nickname);
     }
 
     public User(String nickname) {
