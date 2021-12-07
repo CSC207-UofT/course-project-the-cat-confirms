@@ -10,10 +10,20 @@ public abstract class Message implements JSONable {
     protected String msgId;
     protected Date timestamp;
 
-    public static Message messageMaker(Object data, String sender){
+    public static Message messageMaker(String type, String data, String sender){
         Message msg = null;
-        if (data instanceof String){
-            msg = new TextMessage((String) data, sender);
+        switch (type) {
+            case "txt":
+                msg = new TextMessage(data, sender);
+                break;
+            case "img":
+                msg = new ImageMessage(data, sender);
+                break;
+            case "act":
+                msg = new ActionMessage(data, sender);
+                break;
+            default:
+                throw new TypeNotPresentException(type, new RuntimeException("not supported"));
         }
 
         return msg;

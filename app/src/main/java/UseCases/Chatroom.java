@@ -47,7 +47,8 @@ public class Chatroom implements JSONable {
         this.roomName = roomName;
     }
 
-    public void addMessage(Message msg) {
+    public void addMessage( String msgType, String msgData, String senderId) {
+        Message msg = Message.messageMaker(msgType, msgData, senderId);
         this.messages.add(msg);
         if (this.messages.size() >= 50){
             this.messages.poll();
@@ -85,7 +86,7 @@ public class Chatroom implements JSONable {
         dict.put("roomName", this.roomName);
         dict.put("messages", this.getMessagesSince(new Date(0)));
         dict.put("owner", this.owner.toDict());
-        dict.put("listeners", this.listeners);
+//        dict.put("listeners", this.listeners);
 
         return dict;
     }

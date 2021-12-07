@@ -63,16 +63,12 @@ public class ChatroomManager {
             return "[FAIL]" + "chatroomId" + chatroomId + "not found";
         }
 
+        // decouple the type from the data
         String msgType = msgString.substring(0, 3);
-        String msgText = msgString.substring(4);
+        String msgData = msgString.substring(4);
 
-        Message msg = null;
-        if (msgType.equals("txt")){
-            msg = messageMaker(msgText, sender);
-            chatroom.addMessage(msg);
-        } else {
-            return "[FAIL]" + "Message type " + msgType + " unsupported";
-        }
+        // pass the arguments to the use case
+        chatroom.addMessage(msgType, msgData, sender);
 
         return "[SUCCESS]";
     }

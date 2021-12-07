@@ -10,20 +10,19 @@ public class CommandLineClient {
     public static void main(String[] args) {
         SystemInOut systemInOut = new SystemInOut();
         try {
-            UserRepo userRepo = new UserRepo();
-            User owner = null;
+            UserRepo userRepo = new UserRepo("");
             if (!userRepo.isReady()) {
-                String ownerName = "Junhao"; // FIXME: systemInOut.getLine("Initializing... Please enter your username:");
-                owner = new User(ownerName);
-                userRepo.initRepo(owner);
-            } else {
-                owner = userRepo.getOwner();
+                System.out.println("damn");
+                userRepo.initRepo("");
             }
+            User owner = userRepo.getOwner();
+            System.out.println(owner);
 
             UserProfile userProfile = new UserProfile(owner);
             ChatroomManager chatroomManager = new ChatroomManager(owner);
 
-            Server srv = new Server(userProfile, chatroomManager);
+
+            Server srv = new Server(userProfile, chatroomManager, userRepo);
             owner.setIpAddress(srv.getHostIP()+':'+srv.getPort());
 
             systemInOut.startInteract(userProfile, chatroomManager);

@@ -17,13 +17,19 @@ public class UserProfile {
     public void addUser(String userId, String nickname, String ipAddress){
         User newUser = new User( userId,  nickname,  ipAddress);
         users.put(userId, newUser);
+        System.out.println(this.users);
     }
 
     public String getNickname(String userId){
+        System.out.println(this.users);
+
         User user = users.get(userId);
         if (user != null){
+            System.out.println("hey");
             return user.getNickname();
         }
+
+        System.out.println("damn");
 
         return "";
     }

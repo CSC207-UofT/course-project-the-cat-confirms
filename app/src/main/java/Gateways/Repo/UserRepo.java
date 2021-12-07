@@ -6,26 +6,33 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class UserRepo extends JSONRepo {
-    public UserRepo() {
-        super("resources/user_repo.json");
+    private User owner;
+
+    public UserRepo(String path) {
+        super(path);
+
+        if (!path.equals("")) {
+            this.owner =  new User((HashMap<String, Object>) this.get("owner"));
+        }
     }
 
-    public void initRepo(User owner) {
+    public void initRepo(String ownerName) {
+        User owner = new User(ownerName);
         this.set("owner", owner.toDict());
-        this.set("knownUsers", new ArrayList<User>());
+
+        this.owner = owner;
 
         this.saveRepo();
         loaded = true;
     }
 
-    public void addKnownUser(User user){
-        ArrayList<User> knowUsers = (ArrayList<User>) this.get("knownUsers");
-        knowUsers.add(user);
-
-        this.saveRepo();
+    public User getOwner() {
+        return owner;
     }
 
-    public User getOwner() {
-        return new User((HashMap<String, Object>) this.get("owner"));
+    public void setOwner(User owner) {
+        this.owner = owner;
+        this.set("owner", owner.toDict());
+        this.saveRepo();
     }
 }

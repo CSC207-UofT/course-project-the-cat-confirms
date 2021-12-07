@@ -2,6 +2,7 @@ package Gateways;
 
 import Entities.Message.Message;
 import Entities.User;
+import Gateways.Repo.UserRepo;
 import UseCases.Chatroom;
 import UseCases.UserProfile;
 import com.sun.net.httpserver.HttpExchange;
@@ -12,12 +13,11 @@ import org.json.simple.JSONValue;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.net.InetAddress;
-import java.net.InetSocketAddress;
-import java.net.ServerSocket;
+import java.net.*;
 import java.util.*;
 
 import static Utils.JSONable.toMap;
@@ -27,9 +27,10 @@ public class Server {
     private final String hostIP;
     protected HttpServer server;
     private final UserProfile userProfile;
+    private final UserRepo userRepo;
     private final ChatroomManager chatroomManager;
 
-    public Server(UserProfile userProfile, ChatroomManager chatroomManager) throws IOException {
+    public Server(UserProfile userProfile, ChatroomManager chatroomManager, UserRepo userRepo) throws IOException {
         int freePort = 0;
         try {
             ServerSocket serverSocket = new ServerSocket(0);
@@ -43,11 +44,31 @@ public class Server {
         // FIXME
 //        this.port = freePort;
         this.port = 8000;
+        this.hostIP = getLocalIpAddress();
+
         this.userProfile = userProfile;
         this.chatroomManager = chatroomManager;
-        this.hostIP = InetAddress.getLocalHost().getHostAddress();
+        this.userRepo = userRepo;
 
         initServer();
+    }
+
+    // Reference: https://stackoverflow.com/questions/6064510/how-to-get-ip-address-of-the-device-from-code
+    public static String getLocalIpAddress() {
+        try {
+            for (Enumeration<NetworkInterface> en = NetworkInterface.getNetworkInterfaces(); en.hasMoreElements();) {
+                NetworkInterface intf = en.nextElement();
+                for (Enumeration<InetAddress> enumIpAddr = intf.getInetAddresses(); enumIpAddr.hasMoreElements();) {
+                    InetAddress inetAddress = enumIpAddr.nextElement();
+                    if (!inetAddress.isLoopbackAddress() && inetAddress instanceof Inet4Address) {
+                        return inetAddress.getHostAddress();
+                    }
+                }
+            }
+        } catch (SocketException ex) {
+            ex.printStackTrace();
+        }
+        return null;
     }
 
     // https://www.rgagnon.com/javadetails/java-get-url-parameters-using-jdk-http-server.html
@@ -68,10 +89,14 @@ public class Server {
         this.server = HttpServer.create(new InetSocketAddress(port), 0);
 
         this.server.createContext("/owner", new ProfileHandler());
+        this.server.createContext("/changeOwnerName", new ChangeOwnerNameHandler());
+
         this.server.createContext("/chatroom_create", new ChatRoomCreateHandler());
         this.server.createContext("/chatroom_view", new ChatRoomViewHandler());
         this.server.createContext("/chatroom_send", new ChatRoomSendHandler());
         this.server.createContext("/enroll", new EnrollHandler());
+
+
 
         this.server.setExecutor(null); // creates a default executor
         this.server.start();
@@ -124,6 +149,16 @@ public class Server {
         }
     }
 
+    static public String getBodyText(HttpExchange t) throws IOException {
+        InputStream ios = t.getRequestBody();
+        StringBuilder msgStringBuilder = new StringBuilder();
+        int i;
+        while ((i = ios.read()) != -1) {
+            msgStringBuilder.append((char) i);
+        }
+        return msgStringBuilder.toString();
+    }
+
     class ChatRoomSendHandler implements HttpHandler {
         @Override
         public void handle(HttpExchange t) throws IOException {
@@ -133,22 +168,14 @@ public class Server {
 
             String roomId = params.get("roomId");
             String senderId = params.get("senderId");
-
-            InputStream ios = t.getRequestBody();
-            StringBuilder msgStringBuilder = new StringBuilder();
-            int i;
-            while ((i = ios.read()) != -1) {
-                msgStringBuilder.append((char) i);
-            }
-            String msgString = msgStringBuilder.toString();
-
+            String msgString = getBodyText(t);
+            System.out.println(senderId);
             String response = chatroomManager.storeMessage(roomId, msgString, userProfile.getNickname(senderId));
 
             t.sendResponseHeaders(200, response.length());
             OutputStream os = t.getResponseBody();
             os.write(response.getBytes());
             os.close();
-
         }
     }
 
@@ -158,6 +185,30 @@ public class Server {
             t.getResponseHeaders().add("Access-Control-Allow-Origin", "*");
 
             User owner = userProfile.getOwner();
+
+            String response = JSONValue.toJSONString(owner.toDict());
+
+            t.sendResponseHeaders(200, response.length());
+            OutputStream os = t.getResponseBody();
+            os.write(response.getBytes());
+            os.close();
+
+        }
+    }
+
+    class ChangeOwnerNameHandler implements HttpHandler {
+        @Override
+        public void handle(HttpExchange t) throws IOException {
+            t.getResponseHeaders().add("Access-Control-Allow-Origin", "*");
+
+            Map<String, String> params = queryToMap(t.getRequestURI().getQuery());
+            String newName = params.get("newName");
+
+            User owner = userRepo.getOwner();
+            owner.setUsername(newName);
+            System.out.println(owner);
+            userRepo.setOwner(owner);
+
             String response = JSONValue.toJSONString(owner.toDict());
 
             t.sendResponseHeaders(200, response.length());
@@ -167,22 +218,37 @@ public class Server {
         }
     }
 
+
+
     class EnrollHandler implements HttpHandler{
         @Override
         public void handle(HttpExchange t) throws IOException {
+            t.getResponseHeaders().add("Access-Control-Allow-Origin", "*");
+
             Map<String, String> params = queryToMap(t.getRequestURI().getQuery());
 
             String chatRoomId = params.get("roomId");
-            String userId = params.get("userId");
-            String nickname = params.get("nickname");
-            String ipAddress = params.get("ipAddress");
+            String requestBodyStr = getBodyText(t);
 
-            String response = chatroomManager.enrollUser(chatRoomId, userId, nickname, ipAddress);
+            try {
 
-            t.sendResponseHeaders(200, response.length());
-            OutputStream os = t.getResponseBody();
-            os.write(response.getBytes());
-            os.close();
+                JSONParser jsonParser = new JSONParser();
+                JSONObject json = (JSONObject) jsonParser.parse(requestBodyStr);
+                HashMap<String, Object> bodyParams = toMap(json);
+                String userId = (String) bodyParams.get("userId");
+                String nickname = (String) bodyParams.get("nickname");
+                String ipAddress = (String) bodyParams.get("ipAddress");
+
+                userProfile.addUser(userId, nickname, ipAddress);
+                String response = chatroomManager.enrollUser(chatRoomId, userId, nickname, ipAddress);
+
+                t.sendResponseHeaders(200, response.length());
+                OutputStream os = t.getResponseBody();
+                os.write(response.getBytes());
+                os.close();
+            } catch (IOException | ParseException e) {
+//            e.printStackTrace();
+            }
         }
     }
 }
