@@ -39,7 +39,7 @@ public class UserProfile {
             for (String userId: userInfos.keySet()){
                 HashMap<String, Object> userInfo = userInfos.get(userId);
                 User user = new User(userInfo);
-                this.users.put(user.getUserId(), user);
+                users.put(user.getUserId(), user);
             }
         }
 
