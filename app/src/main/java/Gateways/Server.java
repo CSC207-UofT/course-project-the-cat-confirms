@@ -27,10 +27,9 @@ public class Server {
     private final String hostIP;
     protected HttpServer server;
     private final UserProfile userProfile;
-    private final UserRepo userRepo;
     private final ChatroomManager chatroomManager;
 
-    public Server(UserProfile userProfile, ChatroomManager chatroomManager, UserRepo userRepo) throws IOException {
+    public Server(UserProfile userProfile, ChatroomManager chatroomManager) throws IOException {
         int freePort = 0;
         try {
             ServerSocket serverSocket = new ServerSocket(0);
@@ -39,16 +38,14 @@ public class Server {
         } catch (IOException e) {
             throw new IOException("Port is not available");
         }
-        System.out.println("listening on port:" + freePort);
 
-        // FIXME
-//        this.port = freePort;
-        this.port = 8000;
+        this.port = freePort;
         this.hostIP = getLocalIpAddress();
 
         this.userProfile = userProfile;
+        this.userProfile.setOwnerIPAddress(this.hostIP + ':' + this.port);
+
         this.chatroomManager = chatroomManager;
-        this.userRepo = userRepo;
 
         initServer();
     }
@@ -96,8 +93,7 @@ public class Server {
         this.server.createContext("/chatroom_send", new ChatRoomSendHandler());
         this.server.createContext("/enroll", new EnrollHandler());
 
-
-
+        System.out.println("Starting to listen on port:" + port);
         this.server.setExecutor(null); // creates a default executor
         this.server.start();
     }
@@ -204,12 +200,10 @@ public class Server {
             Map<String, String> params = queryToMap(t.getRequestURI().getQuery());
             String newName = params.get("newName");
 
-            User owner = userRepo.getOwner();
-            owner.setUsername(newName);
-            System.out.println(owner);
-            userRepo.setOwner(owner);
+            userProfile.setOwnerName(newName);
 
-            String response = JSONValue.toJSONString(owner.toDict());
+
+            String response = JSONValue.toJSONString(userProfile.getOwnerDict());
 
             t.sendResponseHeaders(200, response.length());
             OutputStream os = t.getResponseBody();
