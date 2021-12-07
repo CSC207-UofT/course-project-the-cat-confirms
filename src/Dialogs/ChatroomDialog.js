@@ -10,8 +10,8 @@ import CloseIcon from '@mui/icons-material/Close';
 import {Slide} from '@mui/material';
 import {MessageItem} from '../Message/MessageItem';
 import {MessageInput} from '../Message/MessageInput';
-import {MoreVert} from '@mui/icons-material';
 import {pollMsg} from '../actions/room';
+import {ChatroomMoreMenu} from './ChatroomMoreMenu';
 
 const TransitionLeft = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="left" ref={ref} {...props}/>;
@@ -21,6 +21,8 @@ export class ChatroomDialog extends React.Component {
     constructor() {
         super();
         this.pollingEvent = null;
+
+
     }
 
 
@@ -38,7 +40,7 @@ export class ChatroomDialog extends React.Component {
         if (app.state.activeChatroomId !== null){
             this.pollingEvent = setInterval(()=>{
                 pollMsg(app);
-            }, 3000);
+            }, 500);
         }
     }
 
@@ -76,9 +78,7 @@ export class ChatroomDialog extends React.Component {
                         <Typography sx={{ml: 2, flex: 1}} variant="h6" component="div">
                             {room.roomName}
                         </Typography>
-                        <IconButton autoFocus color="inherit" onClick={this.handleClose}>
-                            <MoreVert/>
-                        </IconButton>
+                        <ChatroomMoreMenu app={this.props.app}/>
                     </Toolbar>
                 </AppBar>
                 <List style={{flex: 1}}>

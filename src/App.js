@@ -3,17 +3,13 @@ import {MainPage} from './MainPage/MainPage';
 import {ChatroomDialog} from './Dialogs/ChatroomDialog';
 import {getOwnerProfile} from './actions/owner';
 import axios from 'axios';
-import {pollMsg} from './actions/room';
-
+import {ChangeNameDialog} from './Dialogs/ChangeNameDialog';
 
 export class App extends React.Component {
     constructor(props) {
         super(props);
-        const {
-            match: {params},
-        } = props;
 
-        this.port = parseInt(params.port);
+        this.port = 0;
         this.cancelTokenSource = axios.CancelToken.source();
 
         this.ownerId = "";
@@ -22,11 +18,15 @@ export class App extends React.Component {
         this.state = {
             nickname: "",
             chatRooms: {},
-            activeChatroomId: null
+            activeChatroomId: null,
         };
     }
 
     componentDidMount() {
+        // update backend listening port
+        const urlParams = new URLSearchParams(window.location.search);
+        this.port = parseInt(urlParams.get("port"));
+
         getOwnerProfile(this)
     }
 
@@ -34,6 +34,7 @@ export class App extends React.Component {
         return (<div>
                 <MainPage app={this}/>
                 <ChatroomDialog app={this}/>
+                <ChangeNameDialog app={this}/>
             </div>
         );
     }

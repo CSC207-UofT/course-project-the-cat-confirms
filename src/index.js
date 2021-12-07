@@ -3,16 +3,12 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import reportWebVitals from './reportWebVitals';
 import {App} from './App';
-import {Route, BrowserRouter, Switch} from 'react-router-dom';
+import Webcam from 'react-webcam';
 
 
 ReactDOM.render(
     <React.StrictMode>
-        <BrowserRouter>
-            <Switch>
-                <Route path="/:port" component={App}/>
-            </Switch>
-        </BrowserRouter>
+        <App/>
     </React.StrictMode>,
     document.getElementById('root')
 );

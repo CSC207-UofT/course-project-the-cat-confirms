@@ -20,6 +20,33 @@ export const newRoom = (app, roomName) => {
     });
 };
 
+export const joinRoom = (app, joinRoomToken) => {
+    const {chatRooms} = app.state;
+
+    axios.post(joinRoomToken, {
+        userId: app.ownerId,
+        nickname: app.state.nickname,
+        ipAddress: app.ipAddress
+    },{
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+        }
+    }).then((response) => {
+        console.log(response.data);
+        const {messages, owner, roomId, roomName} = response.data;
+        chatRooms[roomId] = {
+            roomName:roomName,
+            messages: messages,
+            owner: owner
+        }
+        app.setState({
+            chatRooms: chatRooms
+        });
+    });
+};
+
+
+
 export const sendTextMsg = (app, msg) => {
     const {chatRooms, activeChatroomId} = app.state;
 

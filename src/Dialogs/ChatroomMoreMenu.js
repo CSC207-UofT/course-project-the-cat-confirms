@@ -1,16 +1,14 @@
 import React from 'react';
 import {IconButton, Menu, MenuItem} from '@mui/material';
-import AddCircleIcon from '@mui/icons-material/AddCircle';
-import {NewRoomDialog} from '../Dialogs/NewRoomDialog';
-import {JoinRoomDialog} from '../Dialogs/JoinRoomDialog';
+import {MoreVert} from '@mui/icons-material';
+import {ShareRoomDialog} from './ShareRoomDialog';
 
-export class MainBarMenu extends React.Component {
+export class ChatroomMoreMenu extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             anchorEl: null,
-            newRoomDialogOpen: false,
-            joinRoomDialogOpen: false
+            shareRoomDialogOpen: false
         };
     }
 
@@ -21,14 +19,12 @@ export class MainBarMenu extends React.Component {
     };
 
     handleClose = (ev) => {
-        if (ev.target.id === 'new-room') {
+        if (ev.target.id === 'share-room') {
             this.setState({
-                newRoomDialogOpen: true
+                shareRoomDialogOpen: true
             });
-        } else if (ev.target.id === 'join-room') {
-            this.setState({
-                joinRoomDialogOpen: true
-            });
+        } else if (ev.target.id === 'drop-room') {
+
         }
 
         this.setState({
@@ -47,7 +43,7 @@ export class MainBarMenu extends React.Component {
                     onClick={this.handleMenu}
                     color="inherit"
                 >
-                    <AddCircleIcon/>
+                    <MoreVert/>
                 </IconButton>
                 <Menu
                     id="menu-appbar"
@@ -55,11 +51,10 @@ export class MainBarMenu extends React.Component {
                     open={Boolean(anchorEl)}
                     onClose={this.handleClose}
                 >
-                    <MenuItem id={'new-room'} onClick={this.handleClose}>New Room</MenuItem>
-                    <MenuItem id={'join-room'} onClick={this.handleClose}>Join Room</MenuItem>
+                    <MenuItem id={'share-room'} onClick={this.handleClose}>Share Room</MenuItem>
+                    <MenuItem id={'drop-room'} onClick={this.handleClose}>Drop Room</MenuItem>
                 </Menu>
-                <NewRoomDialog app={this.props.app} menu={this}/>
-                <JoinRoomDialog app={this.props.app} menu={this}/>
+                <ShareRoomDialog app={this.props.app} menu={this}/>
             </div>
         );
 
