@@ -56,7 +56,7 @@ public class JSONRepo extends Repo {
 
     @Override
     public boolean set(String key, Object data) {
-        if (this.repo.containsKey(key)){
+        if (this.repo.containsKey(key)) {
             return false;
         }
 

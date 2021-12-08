@@ -1,6 +1,5 @@
 package UseCases;
 
-import Entities.User;
 import Utils.JSONable;
 
 import java.util.ArrayList;
@@ -19,6 +18,4 @@ public interface IChatroom extends JSONable {
     void addMessage(String msgType, String msgData, String senderId);
 
     ArrayList<HashMap<String, Object>> getMessagesSince(Date timestamp);
-
-    User getOwner();
 }
