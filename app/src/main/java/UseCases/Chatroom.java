@@ -10,7 +10,7 @@ import java.util.HashMap;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
-public class Chatroom implements JSONable {
+public class Chatroom implements IChatroom {
     private String roomId;
     private final ConcurrentLinkedQueue<Message> messages;
     private final User owner;
@@ -29,22 +29,27 @@ public class Chatroom implements JSONable {
         System.out.println("Created chatroom " + roomName + " with id=" + this.roomId);
     }
 
+    @Override
     public String getRoomId() {
         return roomId;
     }
 
+    @Override
     public void setRoomId(String roomId){
         this.roomId = roomId;
     }
 
+    @Override
     public String getRoomName() {
         return roomName;
     }
 
+    @Override
     public void setRoomName(String roomName) {
         this.roomName = roomName;
     }
 
+    @Override
     public void addMessage(String msgType, String msgData, String senderId) {
         Message msg = Message.messageMaker(msgType, msgData, senderId);
         this.messages.add(msg);
@@ -53,6 +58,7 @@ public class Chatroom implements JSONable {
         }
     }
 
+    @Override
     public ArrayList<HashMap<String, Object>> getMessagesSince(Date timestamp) {
         // FIXME: support other types of messages
         ArrayList<HashMap<String, Object>> ret = new ArrayList<>();
@@ -65,6 +71,7 @@ public class Chatroom implements JSONable {
         return ret;
     }
 
+    @Override
     public User getOwner() {
         return owner;
     }

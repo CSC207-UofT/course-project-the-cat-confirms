@@ -5,7 +5,7 @@ import Adapters.Gateways.Repo.IUserRepo;
 
 import java.util.HashMap;
 
-public class UserProfile {
+public class UserProfile implements IUserProfile {
     private final User owner;
     private final HashMap<String, User> users;
 
@@ -56,19 +56,23 @@ public class UserProfile {
         this.users = importUsers();
     }
 
+    @Override
     public HashMap<String, Object> getOwnerDict(){
         return this.owner.toDict();
     }
 
+    @Override
     public void setOwnerIPAddress(String ownerIPAddress){
         this.owner.setIpAddress(ownerIPAddress);
     }
 
+    @Override
     public void setOwnerName(String ownerName){
         this.owner.setUsername(ownerName);
         this.userRepo.setOwnerInfo(this.owner.toDict());
     }
 
+    @Override
     public void addUser(String newUserId, String nickname, String ipAddress){
         User newUser = new User( newUserId,  nickname,  ipAddress);
         this.users.put(newUserId, newUser);
@@ -81,6 +85,7 @@ public class UserProfile {
         userRepo.setUserInfos(usersMap);
     }
 
+    @Override
     public String getNickname(String userId){
         User user = users.get(userId);
         if (user != null){
@@ -90,6 +95,7 @@ public class UserProfile {
         return "";
     }
 
+    @Override
     public User getOwner() {
         return owner;
     }

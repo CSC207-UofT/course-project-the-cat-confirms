@@ -4,6 +4,8 @@ import Adapters.Controllers.IChatHubController;
 import Adapters.Gateways.Repo.IUserRepo;
 import Adapters.Presenters.IChatHubViewer;
 import UseCases.Chatroom;
+import UseCases.IChatroom;
+import UseCases.IUserProfile;
 import UseCases.UserProfile;
 import org.json.simple.JSONValue;
 
@@ -11,8 +13,8 @@ import java.util.Date;
 import java.util.HashMap;
 
 public class ChatHubManager implements IChatHubViewer, IChatHubController {
-    private final HashMap<String, Chatroom> chatRooms;
-    private final UserProfile userProfile;
+    private final HashMap<String, IChatroom> chatRooms;
+    private final IUserProfile userProfile;
 
     public ChatHubManager(IUserRepo userRepo) {
         this.chatRooms = new HashMap<>();
@@ -33,7 +35,7 @@ public class ChatHubManager implements IChatHubViewer, IChatHubController {
 
     @Override
     public String createChatRoom(String roomName) {
-        Chatroom chatroom = new Chatroom(roomName, userProfile.getOwner());
+        IChatroom chatroom = new Chatroom(roomName, userProfile.getOwner());
 
         this.chatRooms.put(chatroom.getRoomId(), chatroom);
 
@@ -42,7 +44,7 @@ public class ChatHubManager implements IChatHubViewer, IChatHubController {
 
     @Override
     public String storeMessage(String chatroomId, String msgString, String senderId) {
-        Chatroom chatroom = chatRooms.get(chatroomId);
+        IChatroom chatroom = chatRooms.get(chatroomId);
 
         if (chatroom == null) {
             return "[FAIL]" + "chatroomId" + chatroomId + "not found";
@@ -77,7 +79,7 @@ public class ChatHubManager implements IChatHubViewer, IChatHubController {
 
     @Override
     public String getMessageSince(String chatroomId, Date timestamp) {
-        Chatroom chatroom = chatRooms.get(chatroomId);
+        IChatroom chatroom = chatRooms.get(chatroomId);
 
         if (chatroom == null) {
             return "[FAIL]" + "chatroomId" + chatroomId + "not found";
