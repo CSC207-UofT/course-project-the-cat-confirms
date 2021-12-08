@@ -1,4 +1,4 @@
-package Gateways.Repo;
+package Adapters.Gateways.Repo;
 
 import java.util.HashMap;
 

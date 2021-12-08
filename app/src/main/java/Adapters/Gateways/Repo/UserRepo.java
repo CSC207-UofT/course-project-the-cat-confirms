@@ -1,7 +1,6 @@
-package Gateways.Repo;
+package Adapters.Gateways.Repo;
 
 import java.util.HashMap;
-import java.util.List;
 
 public class UserRepo extends JSONRepo implements IUserRepo {
     public UserRepo(String path) {

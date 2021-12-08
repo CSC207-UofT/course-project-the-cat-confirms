@@ -1,7 +1,7 @@
 package UseCases;
 
 import Entities.User;
-import Gateways.Repo.IUserRepo;
+import Adapters.Gateways.Repo.IUserRepo;
 
 import java.util.HashMap;
 

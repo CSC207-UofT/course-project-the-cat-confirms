@@ -1,4 +1,4 @@
-package Gateways.Repo;
+package Adapters.Gateways.Repo;
 
 import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
