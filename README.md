@@ -5,7 +5,7 @@ course-project-the-cat-confirms created by GitHub Classroom
 1. Messages are now working!!
 2. Architectural changes:
   * Interface Adapter are widely used to reduce dependencies between concrete classes
-  * (Dependency injection) by making an IMessage interface and inject such instance in Chatroom's method calls, we are able to remove Chatroon's dependency on Message
+  * (Dependency injection) by making an IMessage interface and inject such instance in Chatroom's method calls, we are able to remove Chatroom's dependency on Message
   * (Boundary) If a use case class ever needs to depend on a gateway (UserProfile depends on UserRepo), an interface of the gateway is stored in the use case.
   * (Facade)Large classes have been refactored into smaller classes, either through static function in a helper class(HTTPHelper) or the Facade design pattern
   * (Clean Architure) is now stricly followed to avoid cross layer dependencies
