@@ -17,6 +17,13 @@ Lilian was working on the repo part. The Repo class has been refactored into an 
 
 Junhao and Jackson are working together for the services and command-line. They have done significant work on the project which develops the program on the android system.  
 
+## Significant Pull Requests
+
+Varun:
+Pull request made: https://github.com/CSC207-UofT/course-project-the-cat-confirms/pull/3
+I believe this is a significant pull request as it brings in a multitude of changes to various entity classes, introduces new classes and tests, and all together brings the message functionality.
+
+
 ## What we plan to work on next
 | Assignee  | Task          |
 | --------- | ------------- |
