@@ -29,7 +29,7 @@ public class TextMessage extends Message {
         HashMap<String, Object> dict = new HashMap<>();
 
         dict.put("msgId", msgId);
-        dict.put("msgString", "txt="+msg);
+        dict.put("msgString", "txt=" + msg);
         dict.put("sender", sender);
         dict.put("timestamp", timestamp.getTime());
 

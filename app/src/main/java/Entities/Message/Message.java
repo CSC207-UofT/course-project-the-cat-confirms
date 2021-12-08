@@ -1,6 +1,5 @@
 package Entities.Message;
 
-import Entities.User;
 import Utils.JSONable;
 
 import java.util.Date;
@@ -10,7 +9,7 @@ public abstract class Message implements JSONable {
     protected String msgId;
     protected Date timestamp;
 
-    public static Message messageMaker(String type, String data, String sender){
+    public static Message messageMaker(String type, String data, String sender) {
         Message msg = null;
         switch (type) {
             case "txt":
@@ -29,11 +28,11 @@ public abstract class Message implements JSONable {
         return msg;
     }
 
-    public void setMsgId(String msgId){
+    public void setMsgId(String msgId) {
         this.msgId = msgId;
     }
 
-    public Date getTimestamp(){
+    public Date getTimestamp() {
         return timestamp;
     }
 }

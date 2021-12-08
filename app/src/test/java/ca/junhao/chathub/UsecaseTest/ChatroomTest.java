@@ -8,7 +8,6 @@ import org.junit.Test;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 
 import static Entities.Message.Message.messageMaker;
 import static org.junit.Assert.assertEquals;
@@ -70,14 +69,6 @@ public class ChatroomTest {
 
         assertEquals(messages.get(0).get("msgString"), "txt=" + msgData1);
         assertEquals(messages.get(1).get("msgString"), "txt=" + msgData2);
-    }
-
-    /**
-     * Check the owner is the one who created the room
-     */
-    @Test
-    public void testGetOwner() {
-        assertEquals(chatroom1.getOwner(), Peter);
     }
 
 }

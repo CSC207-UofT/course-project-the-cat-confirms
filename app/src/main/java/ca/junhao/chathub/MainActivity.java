@@ -7,11 +7,14 @@ import Adapters.Gateways.Repo.UserRepo;
 import Adapters.Gateways.Server;
 import Adapters.Presenters.IChatHubViewer;
 import android.annotation.SuppressLint;
+import android.os.Bundle;
 import android.os.StrictMode;
 import android.util.Log;
-import android.webkit.*;
+import android.webkit.ConsoleMessage;
+import android.webkit.PermissionRequest;
+import android.webkit.WebChromeClient;
+import android.webkit.WebView;
 import androidx.appcompat.app.AppCompatActivity;
-import android.os.Bundle;
 
 import java.io.IOException;
 
@@ -50,14 +53,14 @@ public class MainActivity extends AppCompatActivity {
         IUserRepo userRepo = new UserRepo(dataFilesPath + "/user_profile.json");
 
         IChatHubController chatHubController = new ChatHubManager(userRepo);
-        IChatHubViewer chatHubViewer = (IChatHubViewer)chatHubController;
+        IChatHubViewer chatHubViewer = (IChatHubViewer) chatHubController;
 
         try {
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
             StrictMode.setThreadPolicy(policy);
             Server srv = new Server(chatHubController, chatHubViewer);
 
-            myWebView.loadUrl("file:///android_asset/web_build/index.html?port="+srv.getPort());
+            myWebView.loadUrl("file:///android_asset/web_build/index.html?port=" + srv.getPort());
 
             // Uncomment this to use the development server
             // myWebView.loadUrl("http://192.168.2.69:3000/?port="+srv.getPort());

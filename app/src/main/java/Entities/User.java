@@ -38,12 +38,12 @@ public class User implements JSONable {
         this.nickname = nickname;
     }
 
-    public void setIpAddress(String address){
-        this.ipAddress = address;
-    }
-
     public String getIpAddress() {
         return ipAddress;
+    }
+
+    public void setIpAddress(String address) {
+        this.ipAddress = address;
     }
 
     @Override
