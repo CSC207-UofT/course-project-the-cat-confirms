@@ -7,19 +7,37 @@ import Adapters.Gateways.Repo.UserRepo;
 import Adapters.Gateways.Server;
 import Adapters.Presenters.IChatHubViewer;
 import android.annotation.SuppressLint;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.util.Log;
-import android.webkit.ConsoleMessage;
-import android.webkit.PermissionRequest;
-import android.webkit.WebChromeClient;
-import android.webkit.WebView;
+import android.webkit.*;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.io.IOException;
 
 
 public class MainActivity extends AppCompatActivity {
+    static int CHOOSE_FILE_REQUEST_CODE = 1;
+    private ValueCallback<Uri[]> mFilePathCallback = null;
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        if (requestCode == CHOOSE_FILE_REQUEST_CODE){
+
+            Uri result = data == null || resultCode != RESULT_OK ? null
+                    : data.getData();
+            if (mFilePathCallback != null) {
+                mFilePathCallback.onReceiveValue((result == null)? null : new Uri[]{result});
+            }
+            mFilePathCallback = null;
+        } else {
+            super.onActivityResult(requestCode, resultCode, data);
+        }
+    }
+
     @SuppressLint("SetJavaScriptEnabled")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +64,18 @@ public class MainActivity extends AppCompatActivity {
                         consoleMessage.lineNumber() + " of " + consoleMessage.sourceId());
                 return true;
             }
+
+            @Override
+            public boolean onShowFileChooser(WebView webView, ValueCallback<Uri[]> filePathCallback, FileChooserParams fileChooserParams) {
+                Intent chooseImageIntent = new Intent(Intent.ACTION_GET_CONTENT);
+                chooseImageIntent.addCategory(Intent.CATEGORY_OPENABLE);
+                chooseImageIntent.setType("image/*");
+
+                mFilePathCallback = filePathCallback;
+
+                startActivityForResult(chooseImageIntent, CHOOSE_FILE_REQUEST_CODE);
+                return true;
+            }
         });
 
         // setup DB
@@ -67,8 +97,8 @@ public class MainActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        myWebView.loadUrl("file:///android_asset/web_build/index.html?port=" + srv.getPort());
+//        myWebView.loadUrl("file:///android_asset/web_build/index.html?port=" + srv.getPort());
         // Uncomment this to use the development server
-        // myWebView.loadUrl("http://192.168.2.69:3000/?port="+srv.getPort());
+         myWebView.loadUrl("http://192.168.2.220:3000/?port="+srv.getPort());
     }
 }

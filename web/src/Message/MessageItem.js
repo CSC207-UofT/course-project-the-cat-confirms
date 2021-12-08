@@ -16,7 +16,8 @@ export class MessageItem extends React.Component {
                     <People/>
                 </Avatar>
             </ListItemAvatar>
-            <ListItemText primary={sender} secondary={type==='txt'?msg:"Message type not supported"}/>
+            <ListItemText primary={sender} secondary={(type === 'txt') ? msg : (type === 'img') ?
+                <img style={{maxWidth: '60vw'}} src={msg}/> : 'Message type not supported'}/>
         </ListItem>)
     }
 }

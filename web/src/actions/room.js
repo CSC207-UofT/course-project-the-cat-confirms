@@ -60,6 +60,19 @@ export const sendTextMsg = (app, msg) => {
     });
 };
 
+export const sendImgMsg = (app, msg) => {
+    const {chatRooms, activeChatroomId} = app.state;
+
+    axios.post(`http://${chatRooms[activeChatroomId].owner.ipAddress}/chatroom_send`, 'img-' + msg, {
+        params: {
+            roomId: activeChatroomId,
+            senderId: app.ownerId
+        },
+    }).then((response) => {
+        console.log(response)
+    });
+};
+
 export const pollMsg = (app) => {
     const {chatRooms, activeChatroomId} = app.state;
 
