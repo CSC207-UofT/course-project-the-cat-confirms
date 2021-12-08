@@ -19,7 +19,6 @@ public class IUserProfileTest {
      */
     @Test
     public void testInitialUserProfile() {
-
         assertEquals("Peter", PeterProfile.getOwner().getNickname());
         assertNull(PeterProfile.getOwner().getIpAddress());
         assertNotNull(PeterProfile.getOwner().getUserId());
