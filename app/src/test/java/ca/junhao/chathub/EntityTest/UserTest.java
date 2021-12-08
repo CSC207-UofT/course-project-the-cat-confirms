@@ -3,7 +3,8 @@ package ca.junhao.chathub.EntityTest;
 import Entities.User;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
 
 /**
  * Example local unit test, which will execute on the development machine (host).
@@ -12,13 +13,13 @@ import static org.junit.Assert.*;
  */
 public class UserTest {
     User user1 = new User("Peter");
-    User user2 = new User("123","Yifan","90016");
+    User user2 = new User("123", "Yifan", "90016");
 
     /**
      * A new user should be able to store a userId when specified
      */
     @Test
-    public void testGetUserId(){
+    public void testGetUserId() {
         assertEquals("123", user2.getUserId());
     }
 
@@ -26,7 +27,7 @@ public class UserTest {
      * A new user should be able to store her/his own nickname
      */
     @Test
-    public void testGetNickname(){
+    public void testGetNickname() {
         assertEquals("Peter", user1.getNickname());
         assertEquals("Yifan", user2.getNickname());
     }
@@ -35,7 +36,7 @@ public class UserTest {
      * Each user should be assigned a unique user id
      */
     @Test
-    public void testUniqueUserId(){
+    public void testUniqueUserId() {
         User newUser = new User("Peter");
 
         // only comparing with user1 because user2's id is manually assigned
@@ -46,37 +47,37 @@ public class UserTest {
      * Each user should be able to set her/his own name
      */
     @Test
-    public void testSetNickname(){
+    public void testSetNickname() {
         String nickname1 = "Junhao";
         String nickname2 = "Jackson";
-        assertNotEquals(nickname1,nickname2);
+        assertNotEquals(nickname1, nickname2);
 
         user1.setUsername(nickname1);
         user2.setUsername(nickname2);
 
-        assertEquals(nickname1,user1.getNickname());
-        assertEquals(nickname2,user2.getNickname());
-        assertNotEquals(user1.getNickname(),user2.getNickname());
+        assertEquals(nickname1, user1.getNickname());
+        assertEquals(nickname2, user2.getNickname());
+        assertNotEquals(user1.getNickname(), user2.getNickname());
     }
 
     /**
      * An IP address without a port number should be stored
      */
     @Test
-    public void testSetIpAddressWithoutPort(){
+    public void testSetIpAddressWithoutPort() {
         String ipAddress = "http://0.0.0.0";
         user1.setIpAddress(ipAddress);
-        assertEquals(ipAddress,user1.getIpAddress());
+        assertEquals(ipAddress, user1.getIpAddress());
     }
 
     /**
      * An IP address with a port number should be stored
      */
     @Test
-    public void testSetIpAddressWithPort(){
+    public void testSetIpAddressWithPort() {
         String ipAddress = "http://0.0.0.0:1234";
         user2.setIpAddress(ipAddress);
-        assertEquals(ipAddress,user2.getIpAddress());
+        assertEquals(ipAddress, user2.getIpAddress());
 
     }
 }
