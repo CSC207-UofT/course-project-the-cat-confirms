@@ -32,7 +32,7 @@ public class ChatHubManager implements IChatHubViewer, IChatHubController {
      */
     @Override
     public String setOwnerName(String ownerName) {
-        userProfile.getOwner().setUsername(ownerName);
+        userProfile.setOwnerName(ownerName);
 
         return this.getOwner();
     }
