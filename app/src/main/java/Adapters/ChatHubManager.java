@@ -3,6 +3,7 @@ package Adapters;
 import Adapters.Controllers.IChatHubController;
 import Adapters.Gateways.Repo.IUserRepo;
 import Adapters.Presenters.IChatHubViewer;
+import Entities.Message.IMessage;
 import UseCases.Chatroom;
 import UseCases.IChatroom;
 import UseCases.IUserProfile;
@@ -11,6 +12,8 @@ import org.json.simple.JSONValue;
 
 import java.util.Date;
 import java.util.HashMap;
+
+import static Entities.Message.IMessage.messageMaker;
 
 public class ChatHubManager implements IChatHubViewer, IChatHubController {
     private final HashMap<String, IChatroom> chatRooms;
@@ -82,7 +85,9 @@ public class ChatHubManager implements IChatHubViewer, IChatHubController {
 
         // pass the arguments to the use case
         String senderName = userProfile.getNickname(senderId);
-        chatroom.addMessage(msgType, msgData, senderName);
+
+        IMessage msg = messageMaker(msgType, msgData, senderName);
+        chatroom.addMessage(msg);
 
         return "[SUCCESS]";
     }

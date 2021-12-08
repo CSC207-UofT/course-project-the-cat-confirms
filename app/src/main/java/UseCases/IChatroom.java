@@ -1,5 +1,7 @@
 package UseCases;
 
+import Entities.Message.IMessage;
+import Entities.Message.Message;
 import Utils.JSONable;
 
 import java.util.ArrayList;
@@ -15,7 +17,7 @@ public interface IChatroom extends JSONable {
 
     void setRoomName(String roomName);
 
-    void addMessage(String msgType, String msgData, String senderId);
+    void addMessage(IMessage msg);
 
     ArrayList<HashMap<String, Object>> getMessagesSince(Date timestamp);
 }
