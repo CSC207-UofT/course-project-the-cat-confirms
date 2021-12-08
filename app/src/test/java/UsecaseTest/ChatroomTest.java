@@ -76,22 +76,4 @@ public class ChatroomTest {
             assertEquals(chatroom1.getOwner(), Peter);
         }
 
-    /**
-     * Check all the room start with no Listener
-     */
-        @Test
-        public void testNolistener(){
-            assertTrue(chatroom1.getListeners().isEmpty());
-        }
-
-    /**
-     * Check all the room start with no Listener
-     */
-        @Test
-        public void testaddlistener(){
-            chatroom1.addListeners(Junhao);
-            ArrayList test = new ArrayList();
-            test.add(Junhao);
-            assertEquals(chatroom1.getListeners(),test);
-    }
 }
