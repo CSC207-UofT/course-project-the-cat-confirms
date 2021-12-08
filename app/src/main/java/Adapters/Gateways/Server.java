@@ -19,8 +19,9 @@ import java.util.Map;
 
 import static Utils.JSONable.toMap;
 import static Utils.NetworkHelper.getLocalIpAddress;
-import static Utils.ServerParser.getBodyText;
-import static Utils.ServerParser.queryToMap;
+import static Utils.ServerHelper.getBodyText;
+import static Utils.ServerHelper.queryToMap;
+import static Utils.ServerHelper.sendHTTPResponse;
 
 public class Server {
     private final int port;
@@ -77,25 +78,18 @@ public class Server {
     class ChatRoomCreateHandler implements HttpHandler {
         @Override
         public void handle(HttpExchange t) throws IOException {
-            t.getResponseHeaders().add("Access-Control-Allow-Origin", "*");
-
             Map<String, String> params = queryToMap(t.getRequestURI().getQuery());
             String roomName = params.get("roomName");
 
             String response = chatHubController.createChatRoom(roomName);
 
-            t.sendResponseHeaders(200, response.length());
-            OutputStream os = t.getResponseBody();
-            os.write(response.getBytes());
-            os.close();
+            sendHTTPResponse(t, response);
         }
     }
 
     class ChatRoomViewHandler implements HttpHandler {
         @Override
         public void handle(HttpExchange t) throws IOException {
-            t.getResponseHeaders().add("Access-Control-Allow-Origin", "*");
-
             Map<String, String> params = queryToMap(t.getRequestURI().getQuery());
             String chatRoomId = params.get("roomId");
             String timestampStr = params.get("timestamp");
@@ -105,18 +99,13 @@ public class Server {
 
             String response = chatHubViewer.getMessageSince(chatRoomId, timestamp);
 
-            t.sendResponseHeaders(200, response.length());
-            OutputStream os = t.getResponseBody();
-            os.write(response.getBytes());
-            os.close();
+            sendHTTPResponse(t, response);
         }
     }
 
     class ChatRoomSendHandler implements HttpHandler {
         @Override
         public void handle(HttpExchange t) throws IOException {
-            t.getResponseHeaders().add("Access-Control-Allow-Origin", "*");
-
             Map<String, String> params = queryToMap(t.getRequestURI().getQuery());
 
             String roomId = params.get("roomId");
@@ -125,74 +114,55 @@ public class Server {
 
             String response = chatHubController.storeMessage(roomId, msgString, senderId);
 
-            t.sendResponseHeaders(200, response.length());
-            OutputStream os = t.getResponseBody();
-            os.write(response.getBytes());
-            os.close();
+            sendHTTPResponse(t, response);
         }
     }
 
     class ProfileHandler implements HttpHandler {
         @Override
         public void handle(HttpExchange t) throws IOException {
-            t.getResponseHeaders().add("Access-Control-Allow-Origin", "*");
-
             String response = chatHubViewer.getOwner();
 
-            t.sendResponseHeaders(200, response.length());
-            OutputStream os = t.getResponseBody();
-            os.write(response.getBytes());
-            os.close();
-
+            sendHTTPResponse(t, response);
         }
     }
 
     class ChangeOwnerNameHandler implements HttpHandler {
         @Override
         public void handle(HttpExchange t) throws IOException {
-            t.getResponseHeaders().add("Access-Control-Allow-Origin", "*");
-
             Map<String, String> params = queryToMap(t.getRequestURI().getQuery());
             String newName = params.get("newName");
 
             String response = chatHubController.setOwnerName(newName);
 
-            t.sendResponseHeaders(200, response.length());
-            OutputStream os = t.getResponseBody();
-            os.write(response.getBytes());
-            os.close();
+            sendHTTPResponse(t, response);
         }
     }
-
 
     class EnrollHandler implements HttpHandler {
         @Override
         public void handle(HttpExchange t) throws IOException {
-            t.getResponseHeaders().add("Access-Control-Allow-Origin", "*");
-
             Map<String, String> params = queryToMap(t.getRequestURI().getQuery());
 
             String chatRoomId = params.get("roomId");
             String requestBodyStr = getBodyText(t);
 
+            HashMap<String, Object> bodyParams = null;
             try {
                 JSONParser jsonParser = new JSONParser();
                 JSONObject json = (JSONObject) jsonParser.parse(requestBodyStr);
-                HashMap<String, Object> bodyParams = toMap(json);
-                String userId = (String) bodyParams.get("userId");
-                String nickname = (String) bodyParams.get("nickname");
-                String ipAddress = (String) bodyParams.get("ipAddress");
-
-                chatHubController.storeUser(userId, nickname, ipAddress);
-                String response = chatHubViewer.getChatRoom(chatRoomId);
-
-                t.sendResponseHeaders(200, response.length());
-                OutputStream os = t.getResponseBody();
-                os.write(response.getBytes());
-                os.close();
-            } catch (IOException | ParseException e) {
+                bodyParams = toMap(json);
+            } catch (ParseException e) {
                 e.printStackTrace();
             }
+
+            String userId = (String) bodyParams.get("userId");
+            String nickname = (String) bodyParams.get("nickname");
+            String ipAddress = (String) bodyParams.get("ipAddress");
+            chatHubController.storeUser(userId, nickname, ipAddress);
+
+            String response = chatHubViewer.getChatRoom(chatRoomId);
+            sendHTTPResponse(t, response);
         }
     }
 }
