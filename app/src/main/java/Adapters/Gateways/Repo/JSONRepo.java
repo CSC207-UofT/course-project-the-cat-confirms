@@ -16,12 +16,19 @@ public class JSONRepo extends Repo {
     private final String path;
     protected boolean loaded;
 
+    /**
+     * @param path the path to the json file
+     */
     public JSONRepo(String path) {
         super();
         this.path = path;
         this.ready = this.loadRepo();
     }
 
+    /**
+     * try to load the given json file and build the database
+     * @return true if the load is successful
+     */
     @Override
     protected boolean loadRepo() {
         boolean loaded = false;
@@ -35,12 +42,15 @@ public class JSONRepo extends Repo {
             this.repo = toMap(json);
             loaded = true;
         } catch (IOException | ParseException e) {
-//            e.printStackTrace();
+            e.printStackTrace();
         }
 
         return loaded;
     }
 
+    /**
+     * Save all changes from memory to the json file
+     */
     @Override
     public void saveRepo() {
         String jsonText = JSONValue.toJSONString(repo);
@@ -54,6 +64,12 @@ public class JSONRepo extends Repo {
         }
     }
 
+    /**
+     * Set an element in the database in memory
+     * @param key key of the element
+     * @param data data to be set
+     * @return true if not conflict
+     */
     @Override
     public boolean set(String key, Object data) {
         if (this.repo.containsKey(key)) {
@@ -64,11 +80,21 @@ public class JSONRepo extends Repo {
         return true;
     }
 
+    /**
+     * Set an element in the database in memory
+     * @param key key of the element
+     * @param data data to be set
+     */
     @Override
     public void overwrite(String key, Object data) {
         this.repo.put(key, data);
     }
 
+    /**
+     * Get an element in the database in memory
+     * @param key key of the element to be gotten
+     * @return the value
+     */
     @Override
     public Object get(String key) {
         return this.repo.get(key);
