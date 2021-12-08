@@ -1,6 +1,13 @@
 # Design Document
 
-# APIs
+## Clean Architecture
+![image](https://user-images.githubusercontent.com/43196707/145178007-4bb7d341-295f-4540-83bb-8ae79150db70.png)
+
+## CRC cards
+![image](https://user-images.githubusercontent.com/43196707/145179973-916a622f-c2ed-47dc-b3c6-2cb570215d36.png)
+
+
+## APIs
 | Path               | Parameters                   | Action                  |
 | ------------------ | ---------------------------- | ----------------------- |
 | /owner             | None                         | get owner info          |
