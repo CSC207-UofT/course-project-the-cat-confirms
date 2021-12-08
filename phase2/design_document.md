@@ -4,7 +4,7 @@
 ![image](https://user-images.githubusercontent.com/43196707/145178007-4bb7d341-295f-4540-83bb-8ae79150db70.png)
 
 ## CRC cards
-![image](https://user-images.githubusercontent.com/43196707/145179973-916a622f-c2ed-47dc-b3c6-2cb570215d36.png)
+![image](https://user-images.githubusercontent.com/43196707/145180955-e1b5cfe4-4625-4e69-8358-ddd0c2d04097.png)
 
 
 ## APIs
