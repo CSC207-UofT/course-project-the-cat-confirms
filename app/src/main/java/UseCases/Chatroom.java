@@ -75,6 +75,10 @@ public class Chatroom implements JSONable {
         return this.listeners;
     }
 
+    public void addListeners(User user){
+        this.listeners.add(user);
+    }
+
     @Override
     public HashMap<String, Object> toDict() {
         HashMap<String, Object> dict = new HashMap<>();

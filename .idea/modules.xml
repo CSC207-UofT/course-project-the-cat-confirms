@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/ChatHub.iml" filepath="$PROJECT_DIR$/.idea/modules/ChatHub.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/ChatHub.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/ChatHub.app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/course-project-the-cat-confirms.ChatHub.iml" filepath="$PROJECT_DIR$/.idea/modules/course-project-the-cat-confirms.ChatHub.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/course-project-the-cat-confirms.ChatHub.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/course-project-the-cat-confirms.ChatHub.app.iml" />
     </modules>
   </component>
 </project>
