@@ -6,7 +6,7 @@ import org.junit.Test;
 
 import java.util.Date;
 
-import static Entities.Message.Message.messageMaker;
+import static Entities.Message.IMessage.messageMaker;
 import static org.junit.Assert.assertEquals;
 
 /**

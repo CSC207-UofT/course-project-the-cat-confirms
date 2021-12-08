@@ -97,8 +97,8 @@ public class MainActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
-//        myWebView.loadUrl("file:///android_asset/web_build/index.html?port=" + srv.getPort());
+        myWebView.loadUrl("file:///android_asset/web_build/index.html?port=" + srv.getPort());
         // Uncomment this to use the development server
-         myWebView.loadUrl("http://192.168.2.220:3000/?port="+srv.getPort());
+//         myWebView.loadUrl("http://192.168.2.220:3000/?port="+srv.getPort());
     }
 }

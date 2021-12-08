@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 
-import static Entities.Message.Message.messageMaker;
+import static Entities.Message.IMessage.messageMaker;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 
@@ -59,11 +59,12 @@ public class ChatroomTest {
         String msgData1 = "I am Peter";
         String msgData2 = "Hello Peter";
 
-        chatroom1.addMessage("txt", msgData1, Peter.getUserId());
-        chatroom1.addMessage("txt", msgData2, Junhao.getUserId());
-
         Message msg1 = messageMaker("txt", msgData1, Peter.getUserId());
         Message msg2 = messageMaker("txt", msgData2, Junhao.getUserId());
+
+        chatroom1.addMessage(msg1);
+        chatroom1.addMessage(msg2);
+
 
         ArrayList<HashMap<String, Object>> messages = chatroom1.getMessagesSince(new Date(0));
 

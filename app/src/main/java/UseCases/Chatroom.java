@@ -1,5 +1,6 @@
 package UseCases;
 
+import Entities.Message.IMessage;
 import Entities.Message.Message;
 import Entities.User;
 
@@ -10,7 +11,7 @@ import java.util.UUID;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
 public class Chatroom implements IChatroom {
-    private final ConcurrentLinkedQueue<Message> messages;
+    private final ConcurrentLinkedQueue<IMessage> messages;
     private final User owner;
     private String roomId;
     private String roomName;
@@ -49,8 +50,7 @@ public class Chatroom implements IChatroom {
     }
 
     @Override
-    public void addMessage(String msgType, String msgData, String senderId) {
-        Message msg = Message.messageMaker(msgType, msgData, senderId);
+    public void addMessage(IMessage msg){
         this.messages.add(msg);
         if (this.messages.size() >= 50) {
             this.messages.poll();
@@ -61,7 +61,7 @@ public class Chatroom implements IChatroom {
     public ArrayList<HashMap<String, Object>> getMessagesSince(Date timestamp) {
         // FIXME: support other types of messages
         ArrayList<HashMap<String, Object>> ret = new ArrayList<>();
-        for (Message msg :
+        for (IMessage msg :
                 this.messages) {
             if (msg.getTimestamp().after(timestamp)) {
                 ret.add(msg.toDict());
