@@ -20,16 +20,16 @@ Junhao and Jackson are working together for the services and command-line. They 
 ## Pull Requests
 | Assignee      | Task          | Link |
 | ------------- | ------------- | ---- |
-| Junhao        | Support Images| https://github.com/CSC207-UofT/course-project-the-cat-confirms/pull/21|
-| Yifan（Peter)  | all the unit test should be important as a pull request as it helps us check the method is reasonable and clear. | https://github.com/CSC207-UofT/course-project-the-cat-confirms/pull/17|
+| Junhao        | Support Images to follow the Principle of Universal Design | https://github.com/CSC207-UofT/course-project-the-cat-confirms/pull/21|
+| Yifan（Peter)  | use dependency injection to remove Chatroom's dependency on Message | https://github.com/CSC207-UofT/course-project-the-cat-confirms/pull/22 |
 | Varun         | it brings in a multitude of changes to various entity classes, introduces new classes and tests, and all together brings the message functionality. | https://github.com/CSC207-UofT/course-project-the-cat-confirms/pull/3|
-| Bu (Lilian)   | All completed |
-| Yuqi          | All completed |
+| Bu (Lilian)   | Documentation are needed in software developments | https://github.com/CSC207-UofT/course-project-the-cat-confirms/pull/6 |
+| Yuqi          | Documentation are needed in software developments | https://github.com/CSC207-UofT/course-project-the-cat-confirms/pull/19 |
 
 ## What we plan to work on next
 | Assignee  | Task          |
 | --------- | ------------- |
-| Junhao    | Support Images|
+| Junhao    | All completed |
 | Yifan     | All completed |
 | Varun     | All completed |
 | Bu        | All completed |
