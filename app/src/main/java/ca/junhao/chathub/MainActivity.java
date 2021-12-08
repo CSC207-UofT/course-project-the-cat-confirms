@@ -48,24 +48,27 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        // setup DB
         String dataFilesPath = getFilesDir().getPath();
         System.out.println(dataFilesPath);
         IUserRepo userRepo = new UserRepo(dataFilesPath + "/user_profile.json");
 
+        // setup controller & presenter
         IChatHubController chatHubController = new ChatHubManager(userRepo);
         IChatHubViewer chatHubViewer = (IChatHubViewer) chatHubController;
 
+        Server srv = null;
         try {
+            // this is required for the server to run on Android in a same thread
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
             StrictMode.setThreadPolicy(policy);
-            Server srv = new Server(chatHubController, chatHubViewer);
-
-            myWebView.loadUrl("file:///android_asset/web_build/index.html?port=" + srv.getPort());
-
-            // Uncomment this to use the development server
-            // myWebView.loadUrl("http://192.168.2.69:3000/?port="+srv.getPort());
+            srv = new Server(chatHubController, chatHubViewer);
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        myWebView.loadUrl("file:///android_asset/web_build/index.html?port=" + srv.getPort());
+        // Uncomment this to use the development server
+        // myWebView.loadUrl("http://192.168.2.69:3000/?port="+srv.getPort());
     }
 }
