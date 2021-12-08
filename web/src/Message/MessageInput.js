@@ -1,6 +1,6 @@
 import React from 'react';
 import {Button, IconButton, TextField} from '@mui/material';
-import {sendTextMsg} from '../actions/room';
+import {sendImgMsg, sendTextMsg} from '../actions/room';
 import {AddCircle} from '@mui/icons-material';
 
 export class MessageInput extends React.Component {
@@ -37,6 +37,24 @@ export class MessageInput extends React.Component {
         textInputElem.focus();
     }
 
+    handleSendImage = () =>{
+        const {app} = this.props;
+
+        const imageInput = document.createElement('input');
+        imageInput.type = 'file';
+
+        const reader = new FileReader();
+        reader.onload = function () {
+            sendImgMsg(app, reader.result);
+        };
+
+        imageInput.onchange = (_ => {
+            const file = imageInput.files[0];
+            reader.readAsDataURL(file);
+        })
+        imageInput.click();
+    }
+
     render() {
         const {textInput} = this.state;
         return (
@@ -50,11 +68,10 @@ export class MessageInput extends React.Component {
                     fullWidth
                 />
                 {(textInput === '') ?
-                    <IconButton><AddCircle fontSize={"large"}/></IconButton>
+                    <IconButton onClick={this.handleSendImage}><AddCircle fontSize={"large"}/></IconButton>
                     : <Button id={'send-text-button'} onClick={this.handleSend} variant={'contained'} color={'info'}>
                         Send
                     </Button>}
-
             </div>
         )
     }
