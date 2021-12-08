@@ -9,6 +9,13 @@ public abstract class Message implements JSONable {
     protected String msgId;
     protected Date timestamp;
 
+    /**
+     * Factory method that makes Messages according to "type"
+     * @param type of the message
+     * @param data in the message
+     * @param sender of the message
+     * @return a Message entity
+     */
     public static Message messageMaker(String type, String data, String sender) {
         Message msg = null;
         switch (type) {
