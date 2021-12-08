@@ -2,14 +2,16 @@
 course-project-the-cat-confirms created by GitHub Classroom
 
 # Highlights since the demo
-1. Architectural changes:
-  * Interface Adapter are widely used to reduce dependencies between concrete classes\
+1. Messages are now working!!
+2. Architectural changes:
+  * Interface Adapter are widely used to reduce dependencies between concrete classes
+  * (Dependency injection) by making an IMessage interface and inject such instance in Chatroom's method calls, we are able to remove Chatroom's dependency on Message
   * (Boundary) If a use case class ever needs to depend on a gateway (UserProfile depends on UserRepo), an interface of the gateway is stored in the use case.
   * (Facade)Large classes have been refactored into smaller classes, either through static function in a helper class(HTTPHelper) or the Facade design pattern
   * (Clean Architure) is now stricly followed to avoid cross layer dependencies
-2. Unit tests are added for most classes except the Server class, which was mainly tested by Postman. If needed, we can share the test cases. 
-3. All classes are documented. Most controller/viewer/gateway classes are heavily documented
-4. All required Phase 2 documents:
+3. Unit tests are added for most classes except the Server class, which was mainly tested by Postman. If needed, we can share the test cases. 
+4. All classes are documented. Most controller/viewer/gateway classes are heavily documented
+5. All required Phase 2 documents:
    | Name | Link |
    | ---- | ---- |
    | Project Accessibility Report |https://github.com/CSC207-UofT/course-project-the-cat-confirms/blob/main/phase2/accessibility.md|
