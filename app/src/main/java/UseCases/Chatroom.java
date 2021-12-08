@@ -14,7 +14,6 @@ public class Chatroom implements JSONable {
     private String roomId;
     private final ConcurrentLinkedQueue<Message> messages;
     private final User owner;
-    private final ArrayList<User> listeners;
     private String roomName;
 
     public Chatroom(String roomName, User owner) {
@@ -26,7 +25,6 @@ public class Chatroom implements JSONable {
         this.roomName = roomName;
         this.owner = owner;
         this.messages = new ConcurrentLinkedQueue<>();
-        this.listeners = new ArrayList<>();
 
         System.out.println("Created chatroom " + roomName + " with id=" + this.roomId);
     }
@@ -69,14 +67,6 @@ public class Chatroom implements JSONable {
 
     public User getOwner() {
         return owner;
-    }
-
-    public ArrayList<User> getListeners() {
-        return this.listeners;
-    }
-
-    public void addListeners(User user){
-        this.listeners.add(user);
     }
 
     @Override
