@@ -6,6 +6,7 @@ import Entities.User;
 import org.junit.Test;
 import java.util.*;
 
+import static Entities.Message.Message.messageMaker;
 import static org.junit.Assert.*;
 
 public class ChatroomTest {
@@ -15,8 +16,8 @@ public class ChatroomTest {
     User Jackson = new User("jackson");
     Chatroom chatroom1 = new Chatroom("room1", Peter);
     Chatroom chatroom2 = new Chatroom("room2", Junhao);
-    Message firstmessage = new TextMessage( "Hello", Peter.getNickname());
-    Message secondmessage = new TextMessage( "I am Peter", Peter.getNickname());
+    Message firstmessage =  messageMaker( "txt","Hello", Peter.getNickname());
+    Message secondmessage = messageMaker( "txt","I am Peter", Peter.getNickname());
 
         /**
          * Each room is available to set its own room ID
@@ -75,5 +76,4 @@ public class ChatroomTest {
         public void testGetOwner() {
             assertEquals(chatroom1.getOwner(), Peter);
         }
-
 }
