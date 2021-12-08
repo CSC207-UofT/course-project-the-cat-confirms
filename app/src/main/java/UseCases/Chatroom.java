@@ -1,5 +1,6 @@
 package UseCases;
 
+import Entities.IUser;
 import Entities.Message.IMessage;
 import Entities.Message.Message;
 import Entities.User;
@@ -12,11 +13,11 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 
 public class Chatroom implements IChatroom {
     private final ConcurrentLinkedQueue<IMessage> messages;
-    private final User owner;
+    private final IUser owner;
     private String roomId;
     private String roomName;
 
-    public Chatroom(String roomName, User owner) {
+    public Chatroom(String roomName, IUser owner) {
         if (roomName.equals("new")) {
             throw new IllegalArgumentException("Cannot name a room as new");
         }

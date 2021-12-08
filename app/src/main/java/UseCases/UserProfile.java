@@ -1,13 +1,14 @@
 package UseCases;
 
 import Adapters.Gateways.Repo.IUserRepo;
+import Entities.IUser;
 import Entities.User;
 
 import java.util.HashMap;
 
 public class UserProfile implements IUserProfile {
-    private final User owner;
-    private final HashMap<String, User> users;
+    private final IUser owner;
+    private final HashMap<String, IUser> users;
 
     private final IUserRepo userRepo;
 
@@ -23,10 +24,10 @@ public class UserProfile implements IUserProfile {
      *
      * @return the imported owner. if the import was unsuccessful, create a new User with empty name
      */
-    private User importOwner() {
+    private IUser importOwner() {
         HashMap<String, Object> ownerInfo = userRepo.getOwnerInfo();
 
-        User owner;
+        IUser owner;
         if (ownerInfo == null) {
             owner = new User("");
         } else {
@@ -40,14 +41,14 @@ public class UserProfile implements IUserProfile {
      *
      * @return the imported users + the owner. if the import was unsuccessful, return the hashmap as-is.
      */
-    private HashMap<String, User> importUsers() {
+    private HashMap<String, IUser> importUsers() {
         // import users with best effort
-        HashMap<String, User> users = new HashMap<>();
+        HashMap<String, IUser> users = new HashMap<>();
         HashMap<String, HashMap<String, Object>> userInfos = userRepo.getUserInfos();
         if (userInfos != null) {
             for (String userId : userInfos.keySet()) {
                 HashMap<String, Object> userInfo = userInfos.get(userId);
-                User user = new User(userInfo);
+                IUser user = new User(userInfo);
                 users.put(user.getUserId(), user);
             }
         }
@@ -75,9 +76,8 @@ public class UserProfile implements IUserProfile {
     }
 
     @Override
-    public void addUser(String newUserId, String nickname, String ipAddress) {
-        User newUser = new User(newUserId, nickname, ipAddress);
-        this.users.put(newUserId, newUser);
+    public void addUser(IUser user) {
+        this.users.put(user.getUserId(), user);
 
         HashMap<String, HashMap<String, Object>> usersMap = new HashMap<>();
         for (String userId : this.users.keySet()) {
@@ -89,7 +89,7 @@ public class UserProfile implements IUserProfile {
 
     @Override
     public String getNickname(String userId) {
-        User user = users.get(userId);
+        IUser user = users.get(userId);
         if (user != null) {
             return user.getNickname();
         }
@@ -98,7 +98,7 @@ public class UserProfile implements IUserProfile {
     }
 
     @Override
-    public User getOwner() {
+    public IUser getOwner() {
         return owner;
     }
 }

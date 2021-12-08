@@ -1,6 +1,6 @@
 package UseCases;
 
-import Entities.User;
+import Entities.IUser;
 
 import java.util.HashMap;
 
@@ -11,9 +11,9 @@ public interface IUserProfile {
 
     void setOwnerName(String ownerName);
 
-    void addUser(String newUserId, String nickname, String ipAddress);
+    void addUser(IUser user);
 
     String getNickname(String userId);
 
-    User getOwner();
+    IUser getOwner();
 }

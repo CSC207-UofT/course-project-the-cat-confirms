@@ -1,6 +1,8 @@
 package ca.junhao.chathub.UsecaseTest;
 
 import Adapters.Gateways.Repo.UserRepo;
+import Entities.IUser;
+import Entities.User;
 import UseCases.IUserProfile;
 import UseCases.UserProfile;
 import org.junit.Test;
@@ -55,7 +57,8 @@ public class IUserProfileTest {
      */
     @Test
     public void testAddUser() {
-        PeterProfile.addUser("1004009957", "Junhao", "0.0.0.0.7000");
+        IUser user = new User("1004009957", "Junhao", "0.0.0.0.7000");
+        PeterProfile.addUser(user);
         assertTrue(PeterRepo.getUserInfos().containsKey("1004009957"));
 
     }

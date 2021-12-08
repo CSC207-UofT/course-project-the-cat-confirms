@@ -5,7 +5,7 @@ import Utils.JSONable;
 import java.util.HashMap;
 import java.util.UUID;
 
-public class User implements JSONable {
+public class User implements IUser {
     private final String userId;
     private String nickname;
     private String ipAddress;
@@ -26,22 +26,27 @@ public class User implements JSONable {
         this.ipAddress = ipAddress;
     }
 
+    @Override
     public String getUserId() {
         return userId;
     }
 
+    @Override
     public String getNickname() {
         return nickname;
     }
 
+    @Override
     public void setUsername(String nickname) {
         this.nickname = nickname;
     }
 
+    @Override
     public String getIpAddress() {
         return ipAddress;
     }
 
+    @Override
     public void setIpAddress(String address) {
         this.ipAddress = address;
     }

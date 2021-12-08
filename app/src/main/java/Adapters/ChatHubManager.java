@@ -3,7 +3,9 @@ package Adapters;
 import Adapters.Controllers.IChatHubController;
 import Adapters.Gateways.Repo.IUserRepo;
 import Adapters.Presenters.IChatHubViewer;
+import Entities.IUser;
 import Entities.Message.IMessage;
+import Entities.User;
 import UseCases.Chatroom;
 import UseCases.IChatroom;
 import UseCases.IUserProfile;
@@ -100,7 +102,8 @@ public class ChatHubManager implements IChatHubViewer, IChatHubController {
      */
     @Override
     public void storeUser(String userId, String nickname, String ipAddress) {
-        userProfile.addUser(userId, nickname, ipAddress);
+        IUser user = new User(userId, nickname, ipAddress);
+        userProfile.addUser(user);
     }
 
     /**
