@@ -23,6 +23,10 @@ Varun:
 Pull request made: https://github.com/CSC207-UofT/course-project-the-cat-confirms/pull/3
 I believe this is a significant pull request as it brings in a multitude of changes to various entity classes, introduces new classes and tests, and all together brings the message functionality.
 
+Peter:
+Pull request made:https://github.com/CSC207-UofT/course-project-the-cat-confirms/pull/17
+In my opinion all the unit test should be important as a pull request as it helps us check the method is reasonable and clear.
+
 
 ## What we plan to work on next
 | Assignee  | Task          |
