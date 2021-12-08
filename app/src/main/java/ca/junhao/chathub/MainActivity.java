@@ -1,27 +1,19 @@
 package ca.junhao.chathub;
 
-import Entities.User;
-import Gateways.ChatroomManager;
-import Gateways.Repo.IUserRepo;
-import Gateways.Repo.UserRepo;
-import Gateways.Server;
-import UseCases.UserProfile;
+import Adapters.ChatHubManager;
+import Adapters.Controllers.IChatHubController;
+import Adapters.Gateways.Repo.IUserRepo;
+import Adapters.Gateways.Repo.UserRepo;
+import Adapters.Gateways.Server;
+import Adapters.Presenters.IChatHubViewer;
 import android.annotation.SuppressLint;
-import android.content.ActivityNotFoundException;
-import android.content.Intent;
-import android.graphics.Bitmap;
-import android.net.Uri;
 import android.os.StrictMode;
-import android.provider.MediaStore;
 import android.util.Log;
 import android.webkit.*;
-import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 
-import java.io.File;
 import java.io.IOException;
-import java.util.Set;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -57,17 +49,18 @@ public class MainActivity extends AppCompatActivity {
         System.out.println(dataFilesPath);
         IUserRepo userRepo = new UserRepo(dataFilesPath + "/user_profile.json");
 
-        UserProfile userProfile = new UserProfile(userRepo);
-        ChatroomManager chatroomManager = new ChatroomManager(userProfile.getOwner());
+        IChatHubController chatHubController = new ChatHubManager(userRepo);
+        IChatHubViewer chatHubViewer = (IChatHubViewer)chatHubController;
 
-        Server srv = null;
         try {
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
             StrictMode.setThreadPolicy(policy);
-            srv = new Server(userProfile, chatroomManager);
+            Server srv = new Server(chatHubController, chatHubViewer);
 
-//            myWebView.loadUrl("http://192.168.2.69:3000/?port="+srv.getPort());
             myWebView.loadUrl("file:///android_asset/web_build/index.html?port="+srv.getPort());
+
+            // Uncomment this to use the development server
+            // myWebView.loadUrl("http://192.168.2.69:3000/?port="+srv.getPort());
         } catch (IOException e) {
             e.printStackTrace();
         }
