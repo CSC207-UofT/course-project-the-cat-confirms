@@ -1,7 +1,7 @@
 package UseCases;
 
-import Entities.User;
 import Adapters.Gateways.Repo.IUserRepo;
+import Entities.User;
 
 import java.util.HashMap;
 
@@ -11,15 +11,23 @@ public class UserProfile implements IUserProfile {
 
     private final IUserRepo userRepo;
 
+    public UserProfile(IUserRepo userRepo) {
+        this.userRepo = userRepo;
+
+        this.owner = importOwner();
+        this.users = importUsers();
+    }
+
     /**
      * Import owner with best efforts
+     *
      * @return the imported owner. if the import was unsuccessful, create a new User with empty name
      */
-    private User importOwner(){
+    private User importOwner() {
         HashMap<String, Object> ownerInfo = userRepo.getOwnerInfo();
 
         User owner;
-        if (ownerInfo == null){
+        if (ownerInfo == null) {
             owner = new User("");
         } else {
             owner = new User(ownerInfo);
@@ -29,14 +37,15 @@ public class UserProfile implements IUserProfile {
 
     /**
      * Import users with best efforts
+     *
      * @return the imported users + the owner. if the import was unsuccessful, return the hashmap as-is.
      */
-    private HashMap<String, User> importUsers(){
+    private HashMap<String, User> importUsers() {
         // import users with best effort
         HashMap<String, User> users = new HashMap<>();
         HashMap<String, HashMap<String, Object>> userInfos = userRepo.getUserInfos();
-        if (userInfos != null){
-            for (String userId: userInfos.keySet()){
+        if (userInfos != null) {
+            for (String userId : userInfos.keySet()) {
                 HashMap<String, Object> userInfo = userInfos.get(userId);
                 User user = new User(userInfo);
                 users.put(user.getUserId(), user);
@@ -49,36 +58,29 @@ public class UserProfile implements IUserProfile {
         return users;
     }
 
-    public UserProfile(IUserRepo userRepo) {
-        this.userRepo = userRepo;
-
-        this.owner = importOwner();
-        this.users = importUsers();
-    }
-
     @Override
-    public HashMap<String, Object> getOwnerDict(){
+    public HashMap<String, Object> getOwnerDict() {
         return this.owner.toDict();
     }
 
     @Override
-    public void setOwnerIPAddress(String ownerIPAddress){
+    public void setOwnerIPAddress(String ownerIPAddress) {
         this.owner.setIpAddress(ownerIPAddress);
     }
 
     @Override
-    public void setOwnerName(String ownerName){
+    public void setOwnerName(String ownerName) {
         this.owner.setUsername(ownerName);
         this.userRepo.setOwnerInfo(this.owner.toDict());
     }
 
     @Override
-    public void addUser(String newUserId, String nickname, String ipAddress){
-        User newUser = new User( newUserId,  nickname,  ipAddress);
+    public void addUser(String newUserId, String nickname, String ipAddress) {
+        User newUser = new User(newUserId, nickname, ipAddress);
         this.users.put(newUserId, newUser);
 
         HashMap<String, HashMap<String, Object>> usersMap = new HashMap<>();
-        for (String userId: this.users.keySet()){
+        for (String userId : this.users.keySet()) {
             usersMap.put(userId, this.users.get(userId).toDict());
         }
 
@@ -86,9 +88,9 @@ public class UserProfile implements IUserProfile {
     }
 
     @Override
-    public String getNickname(String userId){
+    public String getNickname(String userId) {
         User user = users.get(userId);
-        if (user != null){
+        if (user != null) {
             return user.getNickname();
         }
 

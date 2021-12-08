@@ -3,10 +3,10 @@ package Entities.Message;
 import java.util.HashMap;
 
 public class ActionMessage extends Message {
-    private String data;
-    private String sender;
+    private final String data;
+    private final String sender;
 
-    protected ActionMessage(String data, String sender){
+    protected ActionMessage(String data, String sender) {
         this.data = data;
         this.sender = sender;
     }

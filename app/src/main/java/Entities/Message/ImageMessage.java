@@ -1,14 +1,12 @@
 package Entities.Message;
 
-import Entities.User;
-
 import java.util.HashMap;
 
 public class ImageMessage extends Message {
-    private String data;
-    private String sender;
+    private final String data;
+    private final String sender;
 
-    protected ImageMessage(String data, String sender){
+    protected ImageMessage(String data, String sender) {
         this.data = data;
         this.sender = sender;
     }

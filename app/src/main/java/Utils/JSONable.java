@@ -7,9 +7,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public interface JSONable {
-    HashMap<String, Object> toDict();
     // Ref: https://stackoverflow.com/questions/21720759/convert-a-json-string-to-a-hashmap
-    public static HashMap<String, Object> toMap(JSONObject object) {
+    static HashMap<String, Object> toMap(JSONObject object) {
         HashMap<String, Object> map = new HashMap<String, Object>();
 
         for (String key : (Iterable<String>) object.keySet()) {
@@ -25,7 +24,7 @@ public interface JSONable {
         return map;
     }
 
-    public static ArrayList<Object> toList(JSONArray array) {
+    static ArrayList<Object> toList(JSONArray array) {
         ArrayList<Object> list = new ArrayList<Object>();
         for (Object value : array) {
             if (value instanceof JSONArray) {
@@ -37,4 +36,6 @@ public interface JSONable {
         }
         return list;
     }
+
+    HashMap<String, Object> toDict();
 }

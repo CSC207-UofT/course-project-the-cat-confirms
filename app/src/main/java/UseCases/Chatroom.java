@@ -2,7 +2,6 @@ package UseCases;
 
 import Entities.Message.Message;
 import Entities.User;
-import Utils.JSONable;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -11,13 +10,13 @@ import java.util.UUID;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
 public class Chatroom implements IChatroom {
-    private String roomId;
     private final ConcurrentLinkedQueue<Message> messages;
     private final User owner;
+    private String roomId;
     private String roomName;
 
     public Chatroom(String roomName, User owner) {
-        if (roomName.equals("new")){
+        if (roomName.equals("new")) {
             throw new IllegalArgumentException("Cannot name a room as new");
         }
 
@@ -35,7 +34,7 @@ public class Chatroom implements IChatroom {
     }
 
     @Override
-    public void setRoomId(String roomId){
+    public void setRoomId(String roomId) {
         this.roomId = roomId;
     }
 
@@ -53,7 +52,7 @@ public class Chatroom implements IChatroom {
     public void addMessage(String msgType, String msgData, String senderId) {
         Message msg = Message.messageMaker(msgType, msgData, senderId);
         this.messages.add(msg);
-        if (this.messages.size() >= 50){
+        if (this.messages.size() >= 50) {
             this.messages.poll();
         }
     }
@@ -64,16 +63,11 @@ public class Chatroom implements IChatroom {
         ArrayList<HashMap<String, Object>> ret = new ArrayList<>();
         for (Message msg :
                 this.messages) {
-            if (msg.getTimestamp().after(timestamp)){
+            if (msg.getTimestamp().after(timestamp)) {
                 ret.add(msg.toDict());
             }
         }
         return ret;
-    }
-
-    @Override
-    public User getOwner() {
-        return owner;
     }
 
     @Override
