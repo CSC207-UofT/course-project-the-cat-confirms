@@ -1,33 +1,54 @@
-Principle 1: Equitable Use: No since the Owner of the chatroom has more power than the Listener, so It’s not equitable, but it’s impossible to change 
-for our apps since for the security requirement.
+# Project Accessibility Report
 
-Principle 2: Flexibility in Use: We have some flexibility that we can use this app on computer and Android, but we can’t use it on IOS so far. We will 
-improve this in the future. Also our UI is monotonous, this also needs to be improved.
+## Principle of Universal Design
 
-Principle 3: Simple and Intuitive Use: Our app is simple and intuitive to use. It has most functions like the normal chat apps. So it’s easy for all 
-users to have clear feedback on the apps.
+1. Equitable Use
 
-Principle 4: Perceptible Information: Our apps have limitations on this. Since we can send the picture and Action Message, but we cannot Bolding our 
-word our input Voice message so far, such that some sensory limitations can’t use our apps.
+    Our application is released for free. For those who has a PC or Android phone, they should be able to use our application
+     to send messages to different user in the same network. 
+   
+2. Flexibility in Use
 
-Principle 5: Tolerance for Error: We haven’t made it, we will consider this as a target in the future design.
+   The front end is developed with web technologies. Therefore, the whole application is runnable on both a PC or an Android mobile device. 
+   We try to place the UI components in different locations, so clicking the right component should not require too much accuracy.
 
-Principle 6: Low Physical Effort: In some way, our apps need more physical effort than before. Since our chat apps is in a closed internet. 
-Sometimes we need to report some information from open network. We need to copy and paste it into our program rather than other programs. 
-Maybe we just need to forward to other users.
+3. Simple and Intuitive Use
 
-Principle 7: Size and Space for Approach and Use: We haven’t programmed this yet, this is more like a hardware requirement which we may update in our 
-UI later in the future.
+    Each action requires less than 5 clicks to complete:
+   * Create room: (from Main page) 3 clicks + 1 keyboard input
+   * Join room: (from Main page)  2 clicks
+   * Enter chatroom: (from Main page) 1 click
+   * Send message: (from chatroom page) 1~2 clicks
+   * Share room: (from chatroom page) 2 clicks
+
+4. Perceptible Information
+
+    Our application can support sending messages in different forms. For those who has disabilities:
+     * **Visual**: all aria labels on different UI elements should help those users to use a screen reader to read and control the UI.
+     * **Verbal**: no voice message is supported currently. However, if we do support such feature they still have alternative ways to send messages.
+     * **Hearing**: same as **Verbal**.
+
+5. Tolerance for Error
+
+    We require more than 2 steps to confirm a critical action. e.g. Dropping from a chatroom
+
+6. Low Physical Effort
+
+    QR code is supported in sharing/joining chat rooms so that users do not have to enter a 50-charter long token to join some room. 
+
+7: Size and Space for Approach and Use
+
+    Users are required to be under the same network to use our application, unless they can obtain an Internet IP directly on their devices. 
 
 
+## Marketing Strategy
+Our application is advertised as a decentralized chat room. The application targets companies who have highly confidential needs. For example, military service,
+national security, private trading, and intellectual property development. Since it’s de-centralized, all the chat rooms are private and held by 
+the owner of the chatroom and do not go through 3rd-party providers. All the text messages and access to the chatroom are secure and under control by the owner. 
+Since all the data is saved in the private chat room and disconnected with the global internet which means that it only worked for local internet, it will stay 
+away from supervision and monitoring authorities. In other words, it is safer for the owners when compared to other chat apps.
 
-
-Target:
-Our program is targeted as a decentralized chat room. This chat room is designed for companies who have highly confidential needs such as military bases 
-chat service; National security; private trading; high-tech company chat services. Since it’s de-centralized, all the chat rooms are private and held by 
-the owner of the chatroom. All the text messages and access to the chatroom are secure and under control by the owner. Since all the data is saved in the 
-private chat room and disconnected with the global internet which means that it only worked for local internet, it will stay away from supervision and 
-monitoring authorities. In other words, it is safer for the owners when compared to other chat apps.
-
-Obviously, this app takes organizations which need high confidentiality and information security as target clients. Therefore it is not designed for the 
-majority. However, there are still some limitations, i.e. if it is used for illegal purposes, the criminals can stay away from monitoring authorities. 
+## Targeting demographics
+Apparently, this app takes organizations which need high confidentiality and information security as target clients. Therefore, it is not designed for the 
+general public. However, there are still some limitations and risk in operations. For example, if it is used for illegal purposes, the criminals can stay 
+away from monitoring authorities. 
