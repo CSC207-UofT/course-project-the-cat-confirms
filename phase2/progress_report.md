@@ -11,7 +11,7 @@ In phase 2 we have finished our phase 0 goals which keep the SOLID design princi
 
 Since our final project is aiming to run our apps on Android. We replace our command-line with “Android UI + Web Interface”
 
-Peter has been working on the message and test cases together. They work on the factory pattern of the Message and manager. They checked the code and written test cases covered most of the code. 
+Peter and Varun has been working on the message and test cases together. They work on the factory pattern of the Message and manager. They checked the code and written test cases covered most of the code. 
 
 Lilian was working on the repo part. The Repo class has been refactored into an interface and our JSONRepo extends the interface.
 
