@@ -17,7 +17,7 @@ Lilian was working on the repo part. The Repo class has been refactored into an 
 
 Junhao and Jackson are working together for the services and command-line. They have done significant work on the project which develops the program on the android system.  
 
-# What we plan to work on next
+## What we plan to work on next
 | Assignee  | Task          |
 | --------- | ------------- |
 | Junhao    | Support Images|
