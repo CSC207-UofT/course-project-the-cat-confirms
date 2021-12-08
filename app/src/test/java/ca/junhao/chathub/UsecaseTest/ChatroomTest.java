@@ -63,15 +63,13 @@ public class ChatroomTest {
         chatroom1.addMessage("txt", msgData1, Peter.getUserId());
         chatroom1.addMessage("txt", msgData2, Junhao.getUserId());
 
-        List<HashMap<String, Object>> msglist = new ArrayList<>();
-//            HashMap<String, Object> msg1 = new HashMap<>();
-//            msg1.put(msgData1, Peter.getUserId());
-//
-//            HashMap<String, Object> msg2 = new HashMap<>();
-//            msg2.put(msgData2, Peter.getUserId());
-//            msglist.add(msg1);
-//            msglist.add(msg2);
-        assertEquals(chatroom1.getMessagesSince(new Date(1900, 10, 20)), msglist);
+        Message msg1 = messageMaker("txt", msgData1, Peter.getUserId());
+        Message msg2 = messageMaker("txt", msgData2, Junhao.getUserId());
+
+        ArrayList<HashMap<String, Object>> messages = chatroom1.getMessagesSince(new Date(0));
+
+        assertEquals(messages.get(0).get("msgString"), "txt=" + msgData1);
+        assertEquals(messages.get(1).get("msgString"), "txt=" + msgData2);
     }
 
     /**
