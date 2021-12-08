@@ -36,8 +36,8 @@
 
     QR code is supported in sharing/joining chat rooms so that users do not have to enter a 50-charter long token to join some room. 
 
-7: Size and Space for Approach and Use
-
+7. Size and Space for Approach and Use
+    
     Users are required to be under the same network to use our application, unless they can obtain an Internet IP directly on their devices. 
 
 
