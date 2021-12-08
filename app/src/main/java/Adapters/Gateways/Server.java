@@ -10,7 +10,6 @@ import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
 import java.io.IOException;
-import java.io.OutputStream;
 import java.net.InetSocketAddress;
 import java.net.ServerSocket;
 import java.util.Date;
@@ -19,10 +18,13 @@ import java.util.Map;
 
 import static Utils.JSONable.toMap;
 import static Utils.NetworkHelper.getLocalIpAddress;
-import static Utils.ServerHelper.getBodyText;
-import static Utils.ServerHelper.queryToMap;
-import static Utils.ServerHelper.sendHTTPResponse;
+import static Utils.ServerHelper.*;
 
+/**
+ * HTTP server to serve request from the owner and the other users
+ * For more info, refer to: #APIs in
+ * https://github.com/CSC207-UofT/course-project-the-cat-confirms/blob/main/phase2/design_document.md
+ */
 public class Server {
     private final int port;
     private final String hostIP;
@@ -78,9 +80,11 @@ public class Server {
     class ChatRoomCreateHandler implements HttpHandler {
         @Override
         public void handle(HttpExchange t) throws IOException {
+            // parse the parameters
             Map<String, String> params = queryToMap(t.getRequestURI().getQuery());
             String roomName = params.get("roomName");
 
+            // handle the request and send response
             String response = chatHubController.createChatRoom(roomName);
 
             sendHTTPResponse(t, response);
@@ -90,13 +94,14 @@ public class Server {
     class ChatRoomViewHandler implements HttpHandler {
         @Override
         public void handle(HttpExchange t) throws IOException {
+            // parse the parameters
             Map<String, String> params = queryToMap(t.getRequestURI().getQuery());
             String chatRoomId = params.get("roomId");
             String timestampStr = params.get("timestamp");
             long timestampValue = timestampStr != null ? Long.parseLong(timestampStr) : 0;
-
             Date timestamp = new Date(timestampValue);
 
+            // handle the request and send response
             String response = chatHubViewer.getMessageSince(chatRoomId, timestamp);
 
             sendHTTPResponse(t, response);
@@ -106,12 +111,13 @@ public class Server {
     class ChatRoomSendHandler implements HttpHandler {
         @Override
         public void handle(HttpExchange t) throws IOException {
+            // parse the parameters
             Map<String, String> params = queryToMap(t.getRequestURI().getQuery());
-
             String roomId = params.get("roomId");
             String senderId = params.get("senderId");
             String msgString = getBodyText(t);
 
+            // handle the request and send response
             String response = chatHubController.storeMessage(roomId, msgString, senderId);
 
             sendHTTPResponse(t, response);
@@ -121,6 +127,7 @@ public class Server {
     class ProfileHandler implements HttpHandler {
         @Override
         public void handle(HttpExchange t) throws IOException {
+            // handle the request and send response
             String response = chatHubViewer.getOwner();
 
             sendHTTPResponse(t, response);
@@ -130,9 +137,11 @@ public class Server {
     class ChangeOwnerNameHandler implements HttpHandler {
         @Override
         public void handle(HttpExchange t) throws IOException {
+            // parse the parameters
             Map<String, String> params = queryToMap(t.getRequestURI().getQuery());
             String newName = params.get("newName");
 
+            // handle the request and send response
             String response = chatHubController.setOwnerName(newName);
 
             sendHTTPResponse(t, response);
@@ -142,11 +151,12 @@ public class Server {
     class EnrollHandler implements HttpHandler {
         @Override
         public void handle(HttpExchange t) throws IOException {
+            // parse the parameters
             Map<String, String> params = queryToMap(t.getRequestURI().getQuery());
-
             String chatRoomId = params.get("roomId");
             String requestBodyStr = getBodyText(t);
 
+            // parse the body
             HashMap<String, Object> bodyParams = null;
             try {
                 JSONParser jsonParser = new JSONParser();
@@ -159,8 +169,9 @@ public class Server {
             String userId = (String) bodyParams.get("userId");
             String nickname = (String) bodyParams.get("nickname");
             String ipAddress = (String) bodyParams.get("ipAddress");
-            chatHubController.storeUser(userId, nickname, ipAddress);
 
+            // handle the request and send response
+            chatHubController.storeUser(userId, nickname, ipAddress);
             String response = chatHubViewer.getChatRoom(chatRoomId);
             sendHTTPResponse(t, response);
         }
